@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="People Log directory viewer">
+    <title>People Log Directory</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero card">
+        <p class="eyebrow">People Log</p>
+        <h1>Your directory, in a clean web view.</h1>
+        <p class="lede">
+          This GitHub Pages site can render the JSON export from the iPhone app without requiring a backend.
+        </p>
+        <div class="actions">
+          <label class="button button-primary" for="file-input">Open Export File</label>
+          <input id="file-input" type="file" accept=".json,.csv" hidden>
+          <button id="load-published" class="button button-secondary" type="button">Load Published Data</button>
+        </div>
+        <p class="hint">
+          The iPhone app writes <code>people-log-directory.json</code> and a full website bundle into its Files folder.
+        </p>
+      </section>
+
+      <section class="toolbar card">
+        <input id="search" type="search" placeholder="Search by name, company, email, phone, or context">
+        <div class="meta">
+          <span id="status">No file loaded yet.</span>
+          <span id="count">0 people</span>
+        </div>
+      </section>
+
+      <section class="note card">
+        <strong>Privacy note:</strong> this public site shell does not include your private contact list by default.
+        Load your export file locally in the browser, or choose to publish the JSON yourself.
+      </section>
+
+      <section id="directory" class="directory"></section>
+      <template id="empty-state">
+        <section class="card empty">
+          <h2>No directory data loaded</h2>
+          <p>Export the JSON from the People Log app, then open it here to browse your saved people.</p>
+        </section>
+      </template>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
