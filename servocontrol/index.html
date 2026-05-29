@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#101114" />
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="Servo Control"
+    />
+    <meta
+      name="description"
+      content="Homescreen-ready servo control for an ESP32 over Wi-Fi."
+    />
+    <title>Servo Control</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="backdrop backdrop-one"></div>
+    <div class="backdrop backdrop-two"></div>
+
+    <main class="shell">
+      <section class="hero card">
+        <p class="eyebrow">Gimbal Remote</p>
+        <h1>Servo Control</h1>
+        <p class="subtitle">
+          Install this on your iPhone homescreen, point it at your ESP32 over
+          Wi-Fi, and drive the servo with a touch slider.
+        </p>
+
+        <div class="install-note">
+          <span class="pill">iPhone-ready</span>
+          <span class="pill">Wi-Fi control</span>
+          <span class="pill">GitHub Pages friendly</span>
+        </div>
+      </section>
+
+      <section class="card connection-card">
+        <div class="section-header">
+          <div>
+            <p class="section-label">Connection</p>
+            <h2>ESP32 Address</h2>
+          </div>
+          <button id="ping-button" class="secondary-button" type="button">
+            Check
+          </button>
+        </div>
+
+        <label class="field">
+          <span>Board URL</span>
+          <input
+            id="host-input"
+            type="text"
+            spellcheck="false"
+            autocapitalize="none"
+            autocomplete="off"
+            placeholder="http://servo-control.local"
+          />
+        </label>
+
+        <div class="preset-row">
+          <button id="mdns-button" class="chip-button" type="button">
+            Use `.local`
+          </button>
+          <button id="ap-button" class="chip-button" type="button">
+            Use `192.168.4.1`
+          </button>
+          <button id="save-button" class="chip-button" type="button">
+            Save
+          </button>
+        </div>
+
+        <div class="status-panel">
+          <div>
+            <p class="status-label">Status</p>
+            <p id="status-title" class="status-title">Not connected yet</p>
+            <p id="status-detail" class="status-detail">
+              Enter the ESP32 address, then tap Check.
+            </p>
+          </div>
+          <span id="status-badge" class="status-badge status-idle">Idle</span>
+        </div>
+      </section>
+
+      <section class="card servo-card">
+        <div class="section-header">
+          <div>
+            <p class="section-label">Servo</p>
+            <h2>Angle</h2>
+          </div>
+          <p id="angle-readout" class="angle-readout">90°</p>
+        </div>
+
+        <div class="slider-wrap">
+          <input
+            id="angle-slider"
+            type="range"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+          />
+          <div class="tick-row">
+            <span>0°</span>
+            <span>90°</span>
+            <span>180°</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <button data-step="-15" class="secondary-button step-button" type="button">
+            -15
+          </button>
+          <button id="center-button" class="primary-button" type="button">
+            Center
+          </button>
+          <button data-step="15" class="secondary-button step-button" type="button">
+            +15
+          </button>
+        </div>
+      </section>
+
+      <section class="card footer-card">
+        <p class="footer-line">
+          Best on iPhone: add to homescreen from Safari after you publish this
+          folder to GitHub Pages.
+        </p>
+        <p class="footer-line">
+          ESP32 tip: if normal Wi-Fi setup fails, connect your phone to
+          <strong>ESP32-Servo-Remote</strong> and use
+          <strong>http://192.168.4.1</strong>.
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
