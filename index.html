@@ -2,169 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#1f6a52">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="(v2) People Log">
-    <meta
-      name="description"
-      content="A Home Screen web app for saving people and projects on your iPhone without the 7-day native sideload expiry."
-    >
-    <title>(v2) People Log</title>
-    <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="icon" href="./icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redirecting to (v2) People Log</title>
+    <meta http-equiv="refresh" content="0; url=/contacts-holder/">
+    <link rel="canonical" href="https://cyberbrainiac1.github.io/contacts-holder/">
+    <script>
+      location.replace("/contacts-holder/");
+    </script>
   </head>
   <body>
-    <main class="shell">
-      <section class="hero card">
-        <div class="hero-copy">
-          <p class="eyebrow">(v2) People Log</p>
-          <h1>A Home Screen version that keeps working without weekly signing expiry.</h1>
-          <p class="lede">
-            Save contacts and projects, attach a photo, link a project to a person, and keep exports you can open anywhere.
-          </p>
-        </div>
-
-        <div class="hero-grid">
-          <div class="mini-card">
-            <span class="mini-label">Install</span>
-            <p>On iPhone Safari: tap <strong>Share</strong>, then <strong>Add to Home Screen</strong>.</p>
-          </div>
-          <div class="mini-card">
-            <span class="mini-label">Storage</span>
-            <p>Data stays in this browser on your iPhone and can be exported to JSON or CSV any time.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="utility card">
-        <div class="utility-head">
-          <div>
-            <p class="section-label">Backup</p>
-            <h2>Import and export</h2>
-          </div>
-          <p id="install-state" class="install-state">Ready for Home Screen install.</p>
-        </div>
-
-        <div class="action-grid">
-          <label class="button button-primary" for="import-file">Import JSON or CSV</label>
-          <button id="load-published" class="button button-secondary" type="button">Load Published Seed</button>
-          <button id="export-json" class="button button-secondary" type="button">Export JSON</button>
-          <button id="export-csv" class="button button-secondary" type="button">Export CSV</button>
-        </div>
-
-        <input id="import-file" type="file" accept=".json,.csv" hidden>
-      </section>
-
-      <section class="composer card">
-        <div class="utility-head">
-          <div>
-            <p class="section-label">Save</p>
-            <h2 id="form-title">New contact</h2>
-          </div>
-          <span id="entry-count" class="count-pill">0 saved</span>
-        </div>
-
-        <div class="type-toggle" role="tablist" aria-label="Entry type">
-          <button id="type-contact" class="toggle active" type="button">Contact</button>
-          <button id="type-project" class="toggle" type="button">Project</button>
-        </div>
-
-        <form id="entry-form" class="form-grid">
-          <label class="field">
-            <span id="name-label">Name</span>
-            <input id="name" name="name" type="text" placeholder="Avery Chen" autocomplete="name" required>
-          </label>
-
-          <label class="field">
-            <span id="company-label">Company / Role</span>
-            <input id="company" name="company" type="text" placeholder="Intuitive, Mechanical Engineer">
-          </label>
-
-          <label id="email-field" class="field">
-            <span>Email</span>
-            <input id="email" name="email" type="email" placeholder="avery@company.com" autocomplete="email">
-          </label>
-
-          <label id="phone-field" class="field">
-            <span>Phone</span>
-            <input id="phone" name="phone" type="tel" placeholder="+1 415 555 0123" autocomplete="tel">
-          </label>
-
-          <label id="project-field" class="field">
-            <span>Attach Project</span>
-            <select id="linked-project" name="linkedProjectName">
-              <option value="">No linked project</option>
-            </select>
-          </label>
-
-          <label id="linkedin-field" class="field field-wide">
-            <span>LinkedIn Profile</span>
-            <input
-              id="linkedin"
-              name="linkedInURL"
-              type="url"
-              placeholder="https://www.linkedin.com/in/avery-chen"
-              inputmode="url"
-              autocapitalize="off"
-              autocomplete="url"
-            >
-          </label>
-
-          <label class="field field-wide">
-            <span id="context-label">Context</span>
-            <textarea id="context" name="context" rows="5" placeholder="Met at MedTech expo. Working on surgical robotics."></textarea>
-          </label>
-
-          <div class="field field-wide">
-            <span>Photo</span>
-            <div class="photo-tools">
-              <label class="button button-secondary" for="photo-input">Take or Choose Photo</label>
-              <button id="clear-photo" class="button button-ghost" type="button">Remove Photo</button>
-            </div>
-            <input id="photo-input" type="file" accept="image/*" capture="environment" hidden>
-            <div id="photo-preview" class="photo-preview empty">
-              <span>No photo attached yet.</span>
-            </div>
-          </div>
-
-          <div class="form-actions field-wide">
-            <button id="save-entry" class="button button-primary" type="submit">Save contact</button>
-            <button id="reset-form" class="button button-ghost" type="button">Clear form</button>
-          </div>
-        </form>
-
-        <p id="status" class="status">This web app stores entries locally on this iPhone/browser and can export backups any time.</p>
-      </section>
-
-      <section class="directory-shell card">
-        <div class="utility-head">
-          <div>
-            <p class="section-label">Directory</p>
-            <h2>Saved people and projects</h2>
-          </div>
-          <span id="filtered-count" class="count-pill">0 showing</span>
-        </div>
-
-        <label class="search-field">
-          <span class="sr-only">Search</span>
-          <input id="search" type="search" placeholder="Search by name, company, email, context, LinkedIn, or project">
-        </label>
-
-        <section id="directory" class="directory"></section>
-      </section>
-
-      <template id="empty-state">
-        <section class="empty">
-          <h3>No entries yet</h3>
-          <p>Start with a contact or project above, or import a backup file from the original app.</p>
-        </section>
-      </template>
-    </main>
-
-    <script src="./app.js" defer></script>
+    <p>
+      Redirecting to
+      <a href="/contacts-holder/">/contacts-holder/</a>.
+    </p>
   </body>
 </html>

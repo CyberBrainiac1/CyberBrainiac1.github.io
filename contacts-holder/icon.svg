@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2f8a6b"/>
+      <stop offset="100%" stop-color="#184b3e"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="92" y="98" width="328" height="316" rx="44" fill="#fffaf1" opacity="0.96"/>
+  <circle cx="174" cy="196" r="34" fill="#1f6a52"/>
+  <circle cx="248" cy="180" r="26" fill="#88c8b2"/>
+  <path d="M132 278c0-34 28-62 62-62h16c34 0 62 28 62 62v18H132z" fill="#1f6a52"/>
+  <path d="M246 270c0-26 21-47 47-47h9c26 0 47 21 47 47v26h-103z" fill="#88c8b2"/>
+  <rect x="316" y="138" width="62" height="16" rx="8" fill="#1f6a52"/>
+  <rect x="316" y="178" width="62" height="16" rx="8" fill="#1f6a52" opacity="0.75"/>
+  <rect x="316" y="218" width="46" height="16" rx="8" fill="#1f6a52" opacity="0.55"/>
+  <rect x="138" y="350" width="236" height="16" rx="8" fill="#d5e9e1"/>
+  <text
+    x="256"
+    y="456"
+    text-anchor="middle"
+    font-family="Avenir Next, Arial, sans-serif"
+    font-size="44"
+    font-weight="700"
+    fill="#fffaf1"
+  >(v2)</text>
+</svg>
