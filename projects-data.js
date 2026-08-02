@@ -14,12 +14,12 @@ window.portfolioProjects = [
     title: "SolderBuddy",
     meta: "AMD × HACK CLUB ROBOTICS HACKATHON · THREE-PERSON TEAM · PHYSICAL AI · 2025",
     category: "Collaborative robotics",
-    one: "Teaching one robot arm to hand over soldering tools.",
+    one: "A robot arm that hands you tools while you solder.",
     description: [
-      "Soldering requires concentration, but repeatedly stopping to search for tools interrupts precise work. SolderBuddy is a physical AI collaborator that uses one SO101 robot arm and an AMD AI PC to identify, retrieve, and hand tools to a person while they continue soldering.",
-      "As part of a three-person team, I focused on the system’s perception, training data, and human interface. I helped establish a three-camera vision pipeline and collect approximately 480 teleoperated demonstration episodes for imitation learning. We trained ACT and compared it with approaches including pi0.5 and SmolVLA to explore real-time tool pickup and handoff.",
-      "I also designed a dedicated tool-request controller around a Seeed XIAO RP2040 and an OLED display. Instead of navigating a computer interface, the user could request a tool from a simple physical control placed near the work area.",
-      "The project taught me that physical AI depends on much more than selecting a model. Camera placement, demonstration quality, robot consistency, mechanical setup, and the human interface all affect whether a trained behavior works outside a controlled software environment."
+      "When you are soldering, stopping to look for a tool can break your focus. Our three-person team built SolderBuddy so one SO101 robot arm could find a tool, pick it up, and hand it to you.",
+      "I worked on the robot’s vision, training data, and controls. We used three cameras and recorded about 480 examples of a person guiding the arm. Those examples helped us train and compare AI models for picking up and handing over tools.",
+      "I also built a small tool-request controller with a Seeed XIAO RP2040 and an OLED screen. It let the user ask for a tool without opening a computer menu.",
+      "The biggest lesson was that a robot is more than its AI model. Camera angles, good training examples, reliable hardware, and a simple user interface all matter."
     ],
     tech: "Python · LeRobot · ACT · imitation learning · multi-camera computer vision · SO101 robot arm · RP2040 · embedded firmware",
     github: "https://github.com/CyberBrainiac1/SolderBuddy"
@@ -29,16 +29,16 @@ window.portfolioProjects = [
     title: "EvoLoRA",
     meta: "AI ENGINEER WORLD’S FAIR HACKATHON · FINALIST · TOP 6 OF 69 · JUNE 2026",
     category: "Hackathon finalist",
-    one: "Building a bounded agent that plans, trains, judges, and improves task-specific small language models.",
+    one: "Helping small AI models get better at one specific job.",
     description: [
-      "Getting accepted into Cerebral Valley’s 2026 AI Engineer World’s Fair Hackathon was exciting, but entering a room full of AI engineers, founders, and experienced builders was intimidating. I was the youngest participant at a mostly adult hackathon and did not know what to expect.",
-      "Before the event, I met Vaibhav Satishkumar, another Bay Area high school student, through the hackathon Discord. We teamed up and used an Excalidraw whiteboard to map ideas the day before the event. Vaibhav was especially good at generating alternatives and finding a better direction when an idea did not work.",
-      "Our project became EvoLoRA: an auditable, bounded agent that turns a plain-language goal into a LoRA fine-tuning experiment for a small language model. The aim is to make smaller models more capable at focused tasks while keeping them faster, cheaper, and easier to deploy than large general-purpose models.",
-      "A MiniMax agent creates goal-specific evaluations and synthetic training data, then selects LoRA hyperparameters from bounded choices. Python validates each step, locks and SHA-256 hashes the benchmark so it cannot silently change, and controls the training loop. Unsloth trains the selected model on a remote GPU; an LLM hosted on DigitalOcean judges its responses, and a retrain advisor helps decide whether another iteration is worthwhile. EvoLoRA preserves run history in MongoDB Atlas and keeps the best adapter for later inference.",
-      "Vaibhav focused on the GPU-side Unsloth training and inference system. I built the MiniMax planning agent, tool-calling workflow, orchestration, evaluation and training-data pipeline, remote GPU integration, terminal interface, and the connections between each part of the system. Right before the opening ceremony, we met Akshay Langhani; I was impressed by how quickly he learned unfamiliar tools and adapted as the project changed.",
-      "The environment was different from the high school hackathons I had attended. Teams planned architecture on whiteboards and worked through rapid cycles: test an idea, learn from what failed, and build the next version. The views of the Bay and the surrounding architecture made the day even more memorable.",
-      "EvoLoRA finished in the top six out of 69 teams. I also had the chance to meet and talk with Renan Serrano, Ramis Hasanli, and many other builders whose work I enjoyed learning about.",
-      "The event felt intimidating at first, but once I started talking to people and building, I became comfortable and genuinely enjoyed being there. My biggest takeaway was that sometimes you have to run directly toward the things you are unsure of. That is how you discover what you are capable of."
+      "Getting into Cerebral Valley’s 2026 AI Engineer World’s Fair Hackathon was exciting and a little scary. I was the youngest person there. Most of the room was filled with adult AI engineers, founders, and builders with real-world experience.",
+      "I met Vaibhav Satishkumar, another Bay Area high school student, through the event’s Discord. The day before the hackathon, we used an Excalidraw whiteboard to plan ideas. Vaibhav was great at finding a new direction whenever an idea did not work.",
+      "We built EvoLoRA, an agent that fine-tunes small language models for a specific task. You describe the job in plain language, and EvoLoRA creates training examples, chooses safe LoRA settings, trains the model, and checks whether the new version is actually better.",
+      "A MiniMax agent plans the experiment. Python checks every step and locks the evaluation so the test cannot quietly change. Unsloth trains the model on a remote GPU, an LLM on DigitalOcean judges the answers, and MongoDB Atlas saves each run. The system keeps the best adapter for later use.",
+      "Vaibhav built the GPU-side Unsloth training and inference system. I built the MiniMax agent, orchestration, evaluations, training-data pipeline, remote GPU connection, terminal interface, and the links between each part. Just before the opening ceremony, we met Akshay Langhani. I was impressed by how quickly he learned new tools and adapted as the project changed.",
+      "This hackathon felt different from the high school events I had attended. Teams planned on whiteboards, tested ideas quickly, learned from failures, and kept building. The views of the Bay also made the day memorable.",
+      "EvoLoRA finished in the top six out of 69 teams. I also met Renan Serrano, Ramis Hasanli, and many other interesting builders.",
+      "At first I felt out of place. Once I started talking to people and working, I became comfortable and had a great time. My biggest lesson was to run toward the things that make you unsure. That is often how you find out what you can do."
     ],
     tech: "Python · MiniMax M2.7 · LoRA · Unsloth · DigitalOcean Llama 3.3 70B · tool-calling · Textual TUI · MongoDB Atlas · Paramiko SSH/SFTP · locked SHA-256 evaluations",
     github: "https://github.com/Visual-Studio-Coder/EvoLoRA",
@@ -51,10 +51,9 @@ window.portfolioProjects = [
     category: "Bike safety",
     one: "Turning a bike rider’s near miss into useful route data.",
     description: [
-      "Many dangerous moments experienced by cyclists disappear as soon as the ride ends. Blind Spot was designed to capture those moments and turn them into information that could make future routes safer.",
-      "The system combined a bike-mounted hazard-capture device with a phone experience. When something dangerous occurred, the rider could preserve what happened, where it happened, and how safe the route felt. Those reports could then be displayed on a map instead of remaining isolated memories.",
-      "I built an interactive phone demo covering the complete ride flow: viewing a hazard map, starting a live recording, capturing an incident, reviewing the ride, and examining a rider profile. The goal was to make the product understandable through a working interaction rather than relying only on slides.",
-      "The main challenge was connecting a hardware concept, location data, and a clear user workflow within a hackathon timeline. Blind Spot won Milpitas Hacks 3 against a field of 223 participants."
+      "Cyclists often remember a close call, but the useful details disappear after the ride. Blind Spot was our idea for saving those moments and using them to make future routes safer.",
+      "The concept combines a bike-mounted device with a phone app. A rider can save what happened, where it happened, and how safe the route felt. The app then places those reports on a map.",
+      "I built an interactive phone demo for the full ride: viewing the map, starting a recording, saving an incident, and reviewing the trip. Blind Spot won Milpitas Hacks 3 in a field of 223 participants."
     ],
     tech: "Bike-mounted sensing concept · mobile interface design · hazard mapping · GitHub Pages · iOS and Swift concepts",
     github: "https://github.com/CyberBrainiac1/blindspot"
@@ -66,10 +65,9 @@ window.portfolioProjects = [
     category: "Assistive AI",
     one: "Using familiar faces to support dementia care.",
     description: [
-      "People living with dementia may have difficulty recognizing the people around them, while caregivers need a simple way to understand those interactions. FamiliarAI explored whether camera-based face recognition could help organize familiar-person information in one caregiver dashboard.",
-      "As part of a three-person team, I helped develop a camera-based system that recognized faces and presented the information through a TypeScript dashboard. The project combined a technical recognition pipeline with an interface intended to make the output understandable to a caregiver.",
-      "The project was an early prototype, not a clinical product. Its purpose was to demonstrate how recognition technology and interface design could be combined around a specific human need.",
-      "FamiliarAI won BISV Hacks 2026 in a field of 138 participants."
+      "People with dementia may have trouble recognizing someone they know. FamiliarAI explored whether a camera and a simple dashboard could help caregivers organize information about familiar people.",
+      "Our three-person team built a face-recognition prototype and a TypeScript dashboard that made its results easy to understand.",
+      "This was an early demo, not a medical product. FamiliarAI won BISV Hacks 2026 in a field of 138 participants."
     ],
     tech: "TypeScript · camera-based face recognition · dashboard development",
     github: "https://github.com/CyberBrainiac1/FamiliarAI"
@@ -81,10 +79,9 @@ window.portfolioProjects = [
     category: "Motion platform",
     one: "Turning game telemetry into physical movement.",
     description: [
-      "I wanted to understand the complete system behind a motion simulator: not only the moving platform, but also the geometry, motor control, telemetry, calibration, and safety behavior that make the motion believable.",
-      "The rig uses two independently controlled motors and a cable-and-spool mechanism. Each motor pulls one side of a wooden platform, allowing coordinated pitch and roll movement. The motors only pull; they never drive the platform in reverse. The rider’s weight returns the platform, reducing the number of active directions the motor system must control.",
-      "I designed the mechanical layout around motor placement, cable routing, attachment geometry, travel limits, sensor feedback, and service access. The structure also had to remain stable under a moving rider while keeping the actuation system reachable for adjustment.",
-      "The rig is still under construction. The current work focuses on finishing the physical system, integrating position feedback, validating travel limits, and tuning the controller under load."
+      "I wanted to learn what makes a motion simulator feel believable. That meant building the moving platform and also understanding its geometry, motor control, game data, calibration, and safety limits.",
+      "Two motors pull cables wrapped around spools. Each cable lifts one side of a wooden platform, creating pitch and roll. The motors only pull, while the rider’s weight brings the platform back down.",
+      "The rig is still being built. I am now finishing the hardware, adding position sensors, checking the travel limits, and tuning the controller with weight on the platform."
     ],
     tech: "Woodworking · dual-motor cable actuation · spool design · motor drivers · sensor feedback · mechanical safety · Assetto Corsa and BeamNG telemetry",
     github: ""
@@ -96,10 +93,9 @@ window.portfolioProjects = [
     category: "Telemetry control",
     one: "The control layer between telemetry and motors.",
     description: [
-      "The motion rig needed a reliable way to translate racing-game telemetry into safe motor commands. I built a control pipeline that takes FlyPT Mover data over UDP, processes it in a Python and PyQt5 application, sends commands over USB serial to a Seeed XIAO, and controls the motors through a Sabertooth driver.",
-      "The translator implements the rig’s kinematics, a tunable PID loop, calibration procedures, motion limits, and safety logic. I also built automated tests covering the system’s geometry, calibration behavior, and rules that prevent unsafe reverse-driving.",
-      "The geometry used during development includes a 55 mm spool diameter, a 266 mm pivot-to-attachment distance, and approximately ±30 degrees of pitch and roll travel. One working PID starting point was Kp 2.0, Ki 0.05, and Kd 0.1, although final values still depend on the completed physical rig.",
-      "This project separated motion planning from low-level motor control, making it possible to test the mathematics and safety rules before putting a person on the platform."
+      "The motion rig needed software that could turn racing-game data into safe motor movement. My Python app receives data from FlyPT Mover, works out where the platform should move, and sends commands through a Seeed XIAO to a Sabertooth motor driver.",
+      "The app handles the rig’s geometry, PID control, calibration, movement limits, and safety rules. I also wrote automated tests so I could check the math before putting a person on the platform.",
+      "The current setup uses a 55 mm spool, a 266 mm distance from the center pivot to each cable, and about 30 degrees of movement in each direction. The final control settings will be tuned after the physical rig is complete."
     ],
     tech: "Python · PyQt5 · UDP · serial communication · PID control · kinematics · Seeed XIAO · Sabertooth motor driver · automated testing",
     github: "https://github.com/CyberBrainiac1/poseTranslatorCyberRig"
@@ -111,10 +107,10 @@ window.portfolioProjects = [
     category: "Sim-racing hardware",
     one: "Building real steering torque from raw components.",
     description: [
-      "I built a force-feedback steering wheel to use with BeamNG and Assetto Corsa instead of treating sim racing as a purely digital project. The system combines brushed DC motors, a belt and gear drivetrain, an encoder, motor drivers, pedals, and an Arduino Leonardo acting as a USB game controller.",
-      "One version uses two geared motors driving a shared shaft so their torque adds together. The mechanical system had to transmit useful force while avoiding excessive play, flex, heat, and belt slip.",
-      "The most difficult problems appeared in the feedback loop. At different points, a physical 180-degree rotation was reported as approximately 379 degrees and later as only 21 degrees. Fixing this required tracing encoder CPR, quadrature decoding, gear reduction, and which shaft the encoder was actually measuring. I also worked through reversed pedal inputs, incorrect axis assignments, calibration behavior, motor-driver temperature, and inconsistent wheel feel.",
-      "Those failures became the most valuable part of the project. They forced me to treat the wheel as one integrated electromechanical system instead of debugging the firmware, encoder, drivetrain, and game settings separately."
+      "I built my own force-feedback steering wheel for BeamNG and Assetto Corsa. It combines DC motors, belts and gears, an encoder, motor drivers, pedals, and an Arduino Leonardo that acts like a USB game controller.",
+      "One version uses two geared motors on the same shaft so their force adds together. I had to reduce looseness, frame flex, heat, and belt slip while still making the wheel feel strong.",
+      "The hardest bugs came from the steering feedback. A real 180-degree turn was sometimes reported as 379 degrees and later as only 21 degrees. I traced the encoder settings, gear ratio, and sensor location to find the errors. I also fixed reversed pedals, wrong controller axes, calibration problems, and overheated motor drivers.",
+      "Those failures taught me to treat the wheel as one complete system. The firmware, sensor, drivetrain, frame, and game settings all affect how it feels."
     ],
     tech: "Arduino Leonardo · BTS7960 · quadrature encoder · USB HID · brushed DC motors · belt drive · gear drive · woodworking · calibration",
     github: ""
@@ -124,12 +120,12 @@ window.portfolioProjects = [
     title: "BTS7960 Wheel Control Center",
     meta: "PERSONAL SOFTWARE PROJECT · C# · WPF · EMBEDDED HARDWARE",
     category: "Hardware tooling",
-    one: "Making DIY force feedback easier to configure and recover.",
+    one: "A setup and repair app for my force-feedback wheel.",
     description: [
-      "The force-feedback wheel needed more than firmware. Wiring mistakes, calibration errors, driver settings, and failed firmware updates could make the hardware difficult to configure or recover.",
-      "I extended an open-source Arduino force-feedback firmware originally developed by Milos Rankovic and created a Windows WPF Control Center around it. The application includes a guided setup process, wiring validation, calibration, live telemetry, hardware tests, and firmware-management tools.",
-      "I also added a phone dashboard accessible over the local network and a local Ollama assistant panel. Firmware flashing was designed with reset and rollback options so a failed update would not leave the system unusable.",
-      "This project taught me how much engineering happens around the main control algorithm. A usable hardware system also needs diagnostics, safe testing, configuration management, and recovery paths."
+      "My force-feedback wheel needed more than working firmware. A wiring mistake, bad calibration, or failed update could make the hardware difficult to use or repair.",
+      "I expanded open-source Arduino firmware by Milos Rankovic and built a Windows Control Center for it. The app guides setup, checks wiring, calibrates the wheel, shows live data, runs hardware tests, and manages firmware updates.",
+      "I also added a phone dashboard for the local network and a local Ollama assistant. Reset and rollback tools help recover from a bad firmware update.",
+      "This project showed me that useful hardware also needs clear setup, testing, error messages, and recovery tools."
     ],
     tech: "C# · WPF · .NET 8 · Arduino Leonardo · BTS7960 · firmware flashing · telemetry · Ollama",
     github: "https://github.com/CyberBrainiac1/BTS7960LeonardoFirmware-ControlCenter"
@@ -141,9 +137,9 @@ window.portfolioProjects = [
     category: "Bench testing",
     one: "Testing motor forces without entering a race.",
     description: [
-      "Testing a force-feedback wheel only inside a racing game makes it difficult to isolate problems. I built the EMC Force-Feedback Tester to command known effects directly and observe how the wheel hardware responds on the workbench.",
-      "The application includes adjustable force strength and multiple test modes, including constant force, pulses, and oscillation. Keyboard controls make it possible to trigger tests while watching the mechanism, and an always-visible emergency stop provides a quick way to cut the commanded effect.",
-      "The tester helped separate hardware and firmware behavior from game configuration. If an effect behaved incorrectly in the tester, I knew the problem was inside the wheel system rather than the racing game."
+      "Testing the wheel only inside a racing game made bugs hard to track down. I built this tool so I could send known force effects to the wheel while it sat on my workbench.",
+      "The app can apply steady force, pulses, and back-and-forth motion at different strengths. Keyboard controls let me watch the hardware while starting a test, and an emergency-stop button can quickly turn the effect off.",
+      "If a test failed here, I knew the problem was in the wheel or its firmware instead of the game."
     ],
     tech: "C# · .NET · DirectInput · HID force feedback · hardware diagnostics",
     github: "https://github.com/CyberBrainiac1/FFBWheelCustomFirmware"
@@ -153,12 +149,12 @@ window.portfolioProjects = [
     title: "3-DOF Desktop Robot Arm",
     meta: "PERSONAL ROBOTICS PROJECT · 2026",
     category: "Generative CAD",
-    one: "Connecting hardware, simulation, and generative CAD.",
+    one: "One robot arm built in hardware, simulation, and code-made CAD.",
     description: [
-      "This project explores three representations of the same robot arm: a physical mechanism, a MuJoCo simulation, and a generative CAD model.",
-      "The arm uses pivot, shoulder, and elbow joints driven by goBILDA 5203 motors. I designed it to communicate with a REV Expansion Hub from a PC without requiring the complete FTC SDK, making the system useful outside a competition robot.",
-      "In MuJoCo, the user can drag any link and read the resulting joint angles. This creates a direct way to experiment with poses and eventually transfer them to the hardware. I also created a CadQuery model and SolidWorks conversion scripts so dimensions and geometry could be generated programmatically.",
-      "The project is still a development platform rather than a finished autonomous arm. Its main value is connecting mechanical design, simulation, and control around one consistent joint layout."
+      "I built the same three-joint robot arm in three forms: real hardware, a MuJoCo simulation, and a CAD model generated with code.",
+      "The base, shoulder, and elbow use goBILDA 5203 motors. A PC talks directly to a REV Expansion Hub, so I can use the arm without running the full FTC software system.",
+      "In the simulation, you can drag any arm link and see the joint angles change. I also wrote CadQuery and SolidWorks tools that generate the arm’s geometry from dimensions.",
+      "This is still a development platform, not a finished autonomous robot. It gives me one place to connect mechanical design, simulation, and motor control."
     ],
     tech: "goBILDA 5203 motors · REV Expansion Hub · MuJoCo · CadQuery · SolidWorks · PC control",
     github: "https://github.com/CyberBrainiac1/3dof-robot-arm"
@@ -168,12 +164,12 @@ window.portfolioProjects = [
     title: "Robotic Hand",
     meta: "PERSONAL ROBOTICS PROJECT",
     category: "Tendon mechanisms",
-    one: "Learning tendon actuation through printed fingers.",
+    one: "A printed robot hand that curls its fingers with strings.",
     description: [
-      "Human fingers do not rotate around a single rigid motor shaft. I built this project to explore a tendon-based approach in which strings pull through a series of printed joints to create a smooth curling motion.",
-      "Each finger is driven by an MG90S micro servo that pulls a routed tendon. A Raspberry Pi 4B and 16-channel PWM HAT control the six servos, separating high-level control from the electrical timing required by each actuator.",
-      "The main mechanical challenge is routing and tensioning the tendons so the fingers move predictably without excessive friction or slack. The design also has to package several actuators without making the hand too large or difficult to maintain.",
-      "The project gave me hands-on experience with underactuated mechanisms, multi-servo control, tendon routing, CAD, and the differences between modeling a joint and making it move reliably."
+      "I built a printed robot hand that curls its fingers by pulling strings, much like tendons in a human hand.",
+      "An MG90S servo pulls each finger. A Raspberry Pi 4B and a 16-channel servo board control all six motors.",
+      "The hard part was routing and tightening the strings so the fingers moved smoothly without too much friction or slack. I also had to fit several servos into a hand that was still easy to repair.",
+      "This project taught me about tendon-driven mechanisms, multi-servo control, CAD, and the gap between a joint that looks right on screen and one that moves reliably in real life."
     ],
     tech: "Raspberry Pi 4B · PWM servo HAT · MG90S servos · tendon actuation · CAD · 3D printing",
     github: "https://github.com/CyberBrainiac1/RoboticHand"
@@ -183,11 +179,11 @@ window.portfolioProjects = [
     title: "Kinetic Cam",
     meta: "PERSONAL MECHATRONICS PROJECT",
     category: "Camera mechanism",
-    one: "Packaging a moving camera into a compact CAD-first system.",
+    one: "A compact moving camera designed as one complete assembly.",
     description: [
-      "Kinetic Cam is a compact camera head designed around a clear packaging decision: keep the control electronics protected in the body while placing the camera and motion hardware in a servo-driven upper assembly.",
-      "I developed the project as a complete Onshape assembly before separating the linkage, yoke, body, and servo housing into manufacturable parts. The upper mechanism uses an IMU from the MPU-6050 family to provide motion information, while the lower structure creates space for the electronics and custom PCB.",
-      "The project focused less on adding as many axes as possible and more on producing an assembly whose mechanical and electronic parts had intentional locations. Designing the complete system in CAD allowed me to check clearances and service access before fabrication."
+      "Kinetic Cam is a small moving camera head. The main electronics stay protected in the body, while the camera and servos sit in the upper section.",
+      "I first designed the complete assembly in Onshape. Then I split the linkage, yoke, body, and servo housing into parts that could be made. An MPU-6050-family motion sensor tracks movement, and the lower body has room for a custom circuit board.",
+      "Designing everything together helped me check clearances, wiring space, and repair access before building it."
     ],
     tech: "Onshape · FreeCAD · servo mechanisms · GY-521/MPU-6050 IMU · custom PCB design · STEP modeling",
     github: "https://github.com/CyberBrainiac1/kinetic-cam"
@@ -197,12 +193,12 @@ window.portfolioProjects = [
     title: "AI Chess Board",
     meta: "PERSONAL CAD AND AUTOMATION PROJECT",
     category: "Hidden gantry",
-    one: "Hiding the robot so the board remains the experience.",
+    one: "A chess board that hides its moving parts underneath.",
     description: [
-      "Many automated chess boards place visible mechanisms above the playing surface. I wanted the board to look and function like a normal chess set while hiding the movement system underneath.",
-      "My design uses an under-board gantry carrying an electromagnet. Magnetic pieces can be pulled from square to square while the visible surface remains clear. The X-axis uses a belt drive and pancake stepper motor to keep the mechanism compact.",
-      "The main CAD challenge was fitting the motion hardware beneath an 8×8 board while maintaining enough travel to reach every square. The gantry also needed to move pieces without colliding with neighboring pieces or exposing the mechanism above the surface.",
-      "The current project is a CAD prototype. It demonstrates the mechanical architecture but should not be presented as a completed autonomous chess system."
+      "I wanted an automated chess board that still looked like a normal chess set. The moving parts are hidden below the playing surface.",
+      "A small gantry carries an electromagnet under the board. It pulls magnetic pieces from one square to another. A belt and flat stepper motor keep the mechanism compact.",
+      "The main CAD challenge was fitting enough movement under an 8×8 board while avoiding nearby pieces.",
+      "This project is currently a CAD prototype, not a finished autonomous chess board."
     ],
     tech: "CAD · belt drives · pancake stepper motor · electromagnet · gantry design",
     github: "https://github.com/CyberBrainiac1/ai-chess-board"
@@ -212,11 +208,11 @@ window.portfolioProjects = [
     title: "CyberPad and DailyPad",
     meta: "PERSONAL EMBEDDED-HARDWARE PROJECT",
     category: "Input device",
-    one: "Iterating a custom controller around my real workflow.",
+    one: "A custom shortcut pad built around the tools I use every day.",
     description: [
-      "CyberPad began as a custom macropad built around a Seeed XIAO RP2040, hot-swappable mechanical switches, RGB LEDs, and a 3D-printed enclosure. The goal was to create a physical controller for shortcuts I actually use instead of reproducing a generic keyboard layout.",
-      "I designed the PCB and case using Onshape and FreeCAD, then wrote the firmware with CircuitPython and KMK. The controls were programmed to open frequently used websites and tools directly.",
-      "After using the first version, I developed DailyPad as a second iteration. The project became less about making a macropad once and more about refining the hardware and shortcut layout around everyday use."
+      "CyberPad is a small keyboard for the shortcuts I actually use. It has a Seeed XIAO RP2040, replaceable mechanical switches, RGB lights, and a 3D-printed case.",
+      "I designed the circuit board and case in Onshape and FreeCAD, then wrote the firmware with CircuitPython and KMK. Each button can open a website or tool directly.",
+      "After using the first version, I built DailyPad as a second try. That let me improve the hardware and button layout based on everyday use."
     ],
     tech: "Seeed XIAO RP2040 · custom PCB · CircuitPython · KMK · hot-swappable switches · RGB LEDs · Onshape · FreeCAD · 3D printing",
     github: "https://github.com/CyberBrainiac1/CyberPad"
@@ -226,11 +222,11 @@ window.portfolioProjects = [
     title: "Sim Racing Pedal System",
     meta: "PERSONAL ELECTRONICS PROJECT",
     category: "Independent sensing",
-    one: "Separating pedal sensing from wheel control.",
+    one: "A separate USB pedal system for easier testing and upgrades.",
     description: [
-      "I designed the pedal system as an independent input module instead of making it dependent on the force-feedback controller. This made it easier to test pedal sensing, calibration, and axis mapping without involving the wheel’s motor-control loop.",
-      "Development included correcting reversed inputs, testing automatic calibration, assigning the throttle and brake to the expected game-controller axes, and debugging a brake input that registered in software but was not accepted correctly by Assetto Corsa.",
-      "Separating the pedals from the wheel reduced the number of variables involved in each test and made future sensor upgrades easier."
+      "I made the pedals their own USB controller instead of connecting them through the force-feedback wheel. This made the sensors and calibration much easier to test.",
+      "I fixed reversed inputs, automatic calibration, and incorrect throttle and brake axes. I also tracked down a brake signal that appeared in software but was not working correctly in Assetto Corsa.",
+      "Keeping the pedals separate gave me fewer things to debug at once and made future sensor upgrades easier."
     ],
     tech: "Arduino input mapping · USB HID · pedal sensing · switch inputs · calibration",
     github: ""
@@ -242,9 +238,9 @@ window.portfolioProjects = [
     category: "Rig fabrication",
     one: "Building a complete rig with basic tools.",
     description: [
-      "The steering wheel and pedals needed a structure that could resist steering torque and keep the controls in a repeatable position. I built the chassis primarily from standard 2×4 lumber using basic tools.",
-      "The frame had to support the wheel, pedals, seat, electronics, and future motion hardware while remaining practical to modify. Because the project developed over time, I designed the structure around accessible mounting surfaces rather than permanently enclosing components.",
-      "This part of the project taught me that mechanical support structures affect the performance of the electronics mounted to them. Flex in the frame can change the apparent wheel response, pedal feel, and motion-system geometry."
+      "My steering wheel and pedals needed a strong frame that would not move under force. I built the chassis from standard 2×4 lumber with basic tools.",
+      "The frame supports the wheel, pedals, seat, electronics, and future motion hardware. I kept the mounting areas open so I could change parts as the project grew.",
+      "This build showed me how much the frame affects the hardware. Flex can change the steering feel, pedal feel, and motion geometry."
     ],
     tech: "Woodworking · 2×4 construction · drilling · mechanical mounting · iterative fabrication",
     github: ""
@@ -254,12 +250,12 @@ window.portfolioProjects = [
     title: "FRC 2854 — The Prototypes",
     meta: "FIRST ROBOTICS COMPETITION · MECHANICAL MEMBER · NOVEMBER 2025–PRESENT",
     category: "Mechanical member",
-    one: "Rapid mechanical iteration under competition pressure.",
+    one: "Building and repairing an FRC robot under competition pressure.",
     description: [
-      "An FRC robot has to survive repeated impacts, short repair windows, and constant changes between matches. My work on FRC Team 2854, The Prototypes, has focused on mechanical design, testing, troubleshooting, and keeping the robot operational when reliability matters most.",
-      "I research previous FRC games and study how high-performing teams solved similar scoring challenges. I use those patterns to contribute mechanism ideas instead of treating every game as a completely new problem. I have also worked on robot assembly, shooter components, intake alignment, spindexer issues, hopper sag, drivebase assembly, wiring, and repeated testing.",
-      "During Sunset Showdown, I worked permanently in the pits to help prepare the robot for each match. After the shooter and transfer structure bent, another student and I had roughly 30 minutes to diagnose and repair it. We found the shifted plate, worked with a mentor to move it back into position, and restored the scoring mechanism before returning to competition.",
-      "Outside the robot itself, I managed 3D-printing work, adjusted slicer settings for stronger parts, tracked batteries, helped repair bumpers, and checked that required tools were available. These tasks were not visually dramatic, but they directly affected whether the team could compete reliably."
+      "An FRC robot takes hard hits and often has only a few minutes for repairs. On Team 2854, The Prototypes, I work on mechanical design, testing, repairs, and keeping the robot ready for its next match.",
+      "I study older FRC games and learn how strong teams solved similar problems. I have worked on the drivebase, shooter, intake, spindexer, hopper, wiring, assembly, and testing.",
+      "At Sunset Showdown, I stayed in the pits to prepare the robot for each match. When the shooter and transfer frame bent, another student and I had about 30 minutes to find the problem. With help from a mentor, we moved the shifted plate back and got the scoring system working again.",
+      "I also managed 3D prints, changed settings to make parts stronger, tracked batteries, repaired bumpers, and kept tools ready. These small jobs helped the team compete reliably."
     ],
     tech: "Mechanical troubleshooting · CAD review · Onshape · 3D printing · PETG · assembly · pit operations · system testing",
     github: ""
@@ -269,13 +265,12 @@ window.portfolioProjects = [
     title: "FTC 23425 — Evergreen Dragons",
     meta: "FIRST TECH CHALLENGE TEAM 23425 · DESIGN ENGINEER · SEPTEMBER 2023–PRESENT",
     category: "Design engineer",
-    one: "Designing for repeatable, sensor-guided scoring.",
+    one: "Designing a competition robot that can score again and again.",
     description: [
-      "A competition robot does not succeed because it scores once. It succeeds when its mechanisms and autonomous systems can repeat the same action across an entire event.",
-      "As a design engineer for the Evergreen Dragons, I worked on the mechanical design and packaging of a robot built around repeatable scoring. The system combined a Limelight camera and AprilTag localization with a flywheel, powered intake, transfer stage, and driver-facing status indicator.",
-      "My work focused on turning the scoring sequence into a connected mechanical system. The intake had to receive the game piece, the transfer had to move it without jamming, and the flywheel had to launch it consistently. These mechanisms also had to fit alongside cameras, wiring, structure, and other robot subsystems.",
-      "I supported the team’s sensor-driven autonomous development through repeated testing with AprilTags, Road Runner, and dead-wheel odometry. Rather than treating autonomous performance as a single programming task, we tested the complete chain from localization to physical scoring.",
-      "The team received the NorCal FTC Control Award in January 2026 for its use of sensors and software to improve robot performance."
+      "A competition robot has to score more than once. It needs to repeat the same movement through a full event.",
+      "As a design engineer for the Evergreen Dragons, I helped fit the robot’s scoring system into one reliable package. It used a Limelight camera and AprilTags to find its position, plus a powered intake, transfer system, flywheel, and driver status light.",
+      "I worked on how the pieces moved through the robot. The intake had to collect them, the transfer had to avoid jams, and the flywheel had to launch them consistently. Everything also had to fit around the frame, cameras, and wiring.",
+      "We tested the full autonomous system using AprilTags, Road Runner, and tracking wheels. The team received the NorCal FTC Control Award in January 2026 for its use of sensors and software."
     ],
     tech: "Onshape · mechanical packaging · Limelight · AprilTags · Road Runner · odometry · flywheel design · intake and transfer mechanisms",
     github: ""
@@ -287,8 +282,8 @@ window.portfolioProjects = [
     category: "FIRST foundation",
     one: "Learning to improve a robot one run at a time.",
     description: [
-      "FLL was my introduction to competitive robotics. I learned that a robot’s first design rarely works exactly as expected and that consistent improvement comes from observing failures, changing one part of the system, and running the mission again.",
-      "The experience gave me an early foundation in mechanism design, programming, teamwork, competition strategy, and iterative testing. Those lessons carried directly into my later FTC, FRC, and independent projects."
+      "FLL was my introduction to competitive robotics. I learned that the first design rarely works exactly as planned. The best way forward is to watch what fails, change one thing, and run the mission again.",
+      "It gave me an early start in mechanisms, programming, teamwork, strategy, and testing. I still use those lessons in FTC, FRC, and my own projects."
     ],
     tech: "LEGO robotics · programming · mechanism design · teamwork",
     github: ""
