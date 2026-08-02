@@ -811,8 +811,15 @@ button {
   text-transform: uppercase;
 }
 
-.project-dialog .project-link {
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 22px;
+}
+
+.project-dialog .project-link {
+  margin-top: 0;
 }
 
 .about-main {

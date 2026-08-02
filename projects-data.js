@@ -29,16 +29,20 @@ window.portfolioProjects = [
     title: "EvoLoRA",
     meta: "AI ENGINEER WORLD’S FAIR HACKATHON · FINALIST · TOP 6 OF 69 · JUNE 2026",
     category: "Hackathon finalist",
-    one: "Automating the loop between a model idea and a measured result.",
+    one: "Building a bounded agent that plans, trains, judges, and improves task-specific small language models.",
     description: [
-      "Fine-tuning a language model involves more than starting a training job. A useful workflow must define the goal, create data, train the model, evaluate the result, and preserve enough information to compare one run with the next.",
-      "EvoLoRA is an autonomous agent that turns a plain-language goal into a structured LoRA fine-tuning experiment. It plans the run, generates training and evaluation data, launches the process, measures the result, and stores the history for later comparison.",
-      "I built the core planning agent and terminal interface while learning LLM tool-calling and TUI design during the hackathon weekend. I also developed the evaluation and training-data pipeline and connected MongoDB Atlas for persistent run history. Benchmarks were locked and hash-verified so the evaluation criteria could not silently change between iterations.",
-      "The difficult part was creating a system that could make decisions autonomously without losing experimental consistency. The agent needed flexibility when planning, but the benchmarks and stored results needed to remain stable.",
-      "EvoLoRA placed in the top six out of 69 teams at the AI Engineer World’s Fair Hackathon in San Francisco."
+      "Getting accepted into Cerebral Valley’s 2026 AI Engineer World’s Fair Hackathon was exciting, but entering a room full of AI engineers, founders, and experienced builders was intimidating. I was the youngest participant at a mostly adult hackathon and did not know what to expect.",
+      "Before the event, I met Vaibhav Satishkumar, another Bay Area high school student, through the hackathon Discord. We teamed up and used an Excalidraw whiteboard to map ideas the day before the event. Vaibhav was especially good at generating alternatives and finding a better direction when an idea did not work.",
+      "Our project became EvoLoRA: an auditable, bounded agent that turns a plain-language goal into a LoRA fine-tuning experiment for a small language model. The aim is to make smaller models more capable at focused tasks while keeping them faster, cheaper, and easier to deploy than large general-purpose models.",
+      "A MiniMax agent creates goal-specific evaluations and synthetic training data, then selects LoRA hyperparameters from bounded choices. Python validates each step, locks and SHA-256 hashes the benchmark so it cannot silently change, and controls the training loop. Unsloth trains the selected model on a remote GPU; an LLM hosted on DigitalOcean judges its responses, and a retrain advisor helps decide whether another iteration is worthwhile. EvoLoRA preserves run history in MongoDB Atlas and keeps the best adapter for later inference.",
+      "Vaibhav focused on the GPU-side Unsloth training and inference system. I built the MiniMax planning agent, tool-calling workflow, orchestration, evaluation and training-data pipeline, remote GPU integration, terminal interface, and the connections between each part of the system. Right before the opening ceremony, we met Akshay Langhani; I was impressed by how quickly he learned unfamiliar tools and adapted as the project changed.",
+      "The environment was different from the high school hackathons I had attended. Teams planned architecture on whiteboards and worked through rapid cycles: test an idea, learn from what failed, and build the next version. The views of the Bay and the surrounding architecture made the day even more memorable.",
+      "EvoLoRA finished in the top six out of 69 teams. I also had the chance to meet and talk with Renan Serrano, Ramis Hasanli, and many other builders whose work I enjoyed learning about.",
+      "The event felt intimidating at first, but once I started talking to people and building, I became comfortable and genuinely enjoyed being there. My biggest takeaway was that sometimes you have to run directly toward the things you are unsure of. That is how you discover what you are capable of."
     ],
-    tech: "Python · LoRA fine-tuning · LLM agents · tool-calling · terminal interfaces · MongoDB Atlas",
-    github: "https://github.com/Visual-Studio-Coder/EvoLoRA"
+    tech: "Python · MiniMax M2.7 · LoRA · Unsloth · DigitalOcean Llama 3.3 70B · tool-calling · Textual TUI · MongoDB Atlas · Paramiko SSH/SFTP · locked SHA-256 evaluations",
+    github: "https://github.com/Visual-Studio-Coder/EvoLoRA",
+    demo: "https://www.youtube.com/watch?v=4lz4LjBrG7I"
   },
   {
     slug: "blindspot",

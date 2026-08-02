@@ -267,6 +267,14 @@
       link.hidden = true;
       link.removeAttribute("href");
     }
+    const demoLink = dialog.querySelector("[data-dialog-demo]");
+    if (project.demo) {
+      demoLink.href = project.demo;
+      demoLink.hidden = false;
+    } else {
+      demoLink.hidden = true;
+      demoLink.removeAttribute("href");
+    }
     document.body.classList.add("modal-open");
     dialog.showModal();
   }
