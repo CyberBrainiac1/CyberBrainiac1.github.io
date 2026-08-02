@@ -103,7 +103,8 @@
       src: "assets/projects/kinetic-cam.webp",
       alt: "CAD render of the Kinetic Cam mechanical camera head",
       fit: "contain",
-      position: "center"
+      position: "center",
+      transform: "translateX(-16.5%)"
     },
     chessboard: {
       src: "assets/projects/ai-chess-board.webp",
@@ -222,7 +223,7 @@
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
     if (media.kind === "model") return modelMarkup(project, index, media, context);
-    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" style="object-fit:${media.fit};object-position:${media.position}">
+    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" style="object-fit:${media.fit};object-position:${media.position}${media.transform ? `;transform:${media.transform}` : ""}">
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">${project.category}</span>`;
   }
