@@ -149,20 +149,6 @@ window.portfolioProjects = [
     github: "https://github.com/CyberBrainiac1/FFBWheelCustomFirmware"
   },
   {
-    slug: "compactarm",
-    title: "Compact Robot Arm",
-    meta: "PERSONAL ROBOTICS PROJECT · OCTOBER 2025–PRESENT",
-    category: "Low-cost robotics",
-    one: "Moving a low-cost arm from manual control toward autonomy.",
-    description: [
-      "I built a compact robot arm using low-cost servo motors, a Raspberry Pi 4B, and an Adafruit servo HAT. The goal was to package the mechanical structure, electronics, and multi-servo control into a small platform that I could continue developing instead of treating it as a one-time demonstration.",
-      "The first stage focused on mechanical assembly and reliable joint control. I am now extending the arm into Isaac Sim so I can explore simulation-driven control, reinforcement learning, and autonomous behavior without risking the physical mechanism during every experiment.",
-      "The project gives me a platform for studying the gap between a commanded joint angle and what a low-cost physical arm actually does under backlash, flex, load, and servo limitations."
-    ],
-    tech: "Raspberry Pi 4B · Adafruit servo HAT · servo control · CAD · 3D printing · Isaac Sim",
-    github: ""
-  },
-  {
     slug: "arm3dof",
     title: "3-DOF Desktop Robot Arm",
     meta: "PERSONAL ROBOTICS PROJECT · 2026",
