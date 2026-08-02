@@ -72,10 +72,11 @@
       position: "center top"
     },
     ffbwheel: {
-      src: "assets/projects/ffb-wheel.webp",
-      alt: "DIY force-feedback steering wheel hardware and wiring",
-      fit: "cover",
-      position: "center"
+      src: "assets/projects/ffb-wheelbase-removedbg.png",
+      alt: "Isolated force-feedback steering wheelbase with motors, drivers, and wiring",
+      fit: "contain",
+      position: "center",
+      transform: "translateX(-7%) scale(1.12)"
     },
     controlcenter: {
       src: "assets/projects/wheel-control-center.webp",
@@ -120,10 +121,11 @@
       position: "center"
     },
     pedal: {
-      src: "assets/projects/sim-pedal.webp",
-      alt: "DIY sim-racing pedal sensor mechanism",
-      fit: "cover",
-      position: "center"
+      src: "assets/projects/sim-pedals-removedbg.png",
+      alt: "Isolated DIY sim-racing throttle and brake pedal assembly",
+      fit: "contain",
+      position: "center",
+      transform: "translate(3%, -2%) scale(1.4)"
     },
     chassis: {
       src: "assets/projects/wooden-sim-racing-chassis.webp",
