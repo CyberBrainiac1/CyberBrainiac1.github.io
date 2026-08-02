@@ -296,6 +296,13 @@ button {
   height: 256px;
 }
 
+.portrait-plate__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% center;
+}
+
 .portrait-plate::before,
 .portrait-plate::after,
 .figure-plate::before,
@@ -340,6 +347,7 @@ button {
 
 .portrait-plate::before,
 .figure-plate::before {
+  z-index: 2;
   top: 5px;
   left: 5px;
   border-top: 1.5px solid var(--accent);
@@ -348,6 +356,7 @@ button {
 
 .portrait-plate::after,
 .figure-plate::after {
+  z-index: 2;
   right: 5px;
   bottom: 5px;
   border-right: 1.5px solid var(--accent);
@@ -362,12 +371,17 @@ button {
 
 .portrait-plate__label {
   position: absolute;
+  z-index: 2;
   right: 10px;
   bottom: 10px;
   left: 10px;
+  padding: 5px 6px;
+  color: var(--bg);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-align: center;
+  background: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .body-copy {
