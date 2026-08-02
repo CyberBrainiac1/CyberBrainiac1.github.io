@@ -28,12 +28,6 @@
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const projectMedia = {
-    catch: {
-      src: "assets/projects/catch.webp",
-      alt: "Onshape view of the CATCH cam, roller, and joint assembly",
-      fit: "cover",
-      position: "center"
-    },
     solderbuddy: {
       src: "assets/projects/solderbuddy.webp",
       alt: "SolderBuddy robot arm beside soldering tools",
@@ -239,25 +233,34 @@
   if (rail && projects.length) {
     let ignoreCardClick = false;
     const cards = projects.map((project, index) => {
-      const button = document.createElement("button");
-      button.className = "project-card";
-      button.type = "button";
-      button.dataset.projectIndex = String(index);
-      button.setAttribute("aria-label", `Open details for ${project.title}`);
+      const card = document.createElement(project.statusOnly ? "article" : "button");
+      card.className = `project-card${project.statusOnly ? " project-card--status-only" : ""}`;
+      card.dataset.projectIndex = String(index);
+      if (project.statusOnly) {
+        card.setAttribute("aria-label", `${project.title} — ${project.one}`);
+        card.innerHTML = `
+          <span class="project-card__copy">
+            <span role="heading" aria-level="2" class="project-card__title">${project.title}</span>
+            <span class="project-card__status">${project.one}</span>
+          </span>`;
+        return card;
+      }
+      card.type = "button";
+      card.setAttribute("aria-label", `Open details for ${project.title}`);
       const media = projectMedia[project.slug];
       const hasMedia = Boolean(media);
       const hasModel = media?.kind === "model";
-      button.innerHTML = `
+      card.innerHTML = `
         <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
           <span class="meta">${project.meta}</span>
-          <span role="heading" aria-level="2" style="display:block;font-size:19px;font-weight:600;margin-top:7px;line-height:1.2">${project.title}</span>
+          <span role="heading" aria-level="2" class="project-card__title">${project.title}</span>
           <span style="display:block;color:var(--muted);font-size:13px;line-height:1.55;margin-top:7px">${project.one}</span>
         </span>`;
-      button.addEventListener("click", () => {
+      card.addEventListener("click", () => {
         if (!ignoreCardClick) openProject(index);
       });
-      return button;
+      return card;
     });
     rail.append(...cards);
 

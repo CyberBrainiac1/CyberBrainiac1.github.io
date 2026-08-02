@@ -2,12 +2,13 @@ window.portfolioProjects = [
   {
     slug: "catch",
     title: "CATCH",
-    meta: "COMING SOON",
-    category: "In development",
-    one: "Coming soon… I’m still working on it.",
-    description: ["Coming soon… I’m still working on it."],
+    meta: "",
+    category: "",
+    one: "In progress",
+    description: [],
     tech: "",
-    github: ""
+    github: "",
+    statusOnly: true
   },
   {
     slug: "solderbuddy",

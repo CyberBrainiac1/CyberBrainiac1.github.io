@@ -555,6 +555,30 @@ model-viewer:not(:defined) .project-model__fallback {
   border-left: 1px solid var(--line);
 }
 
+.focus-panel--status-only {
+  grid-template-columns: 1fr;
+}
+
+.focus-panel--status-only .focus-panel__copy {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.focus-panel--status-only h3 {
+  margin: 0;
+}
+
+.focus-panel--status-only p {
+  margin-top: 12px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
 .schematic-svg {
   display: block;
   width: 100%;
@@ -816,6 +840,47 @@ model-viewer:not(:defined) .project-model__fallback {
 
 .project-card__copy {
   padding: 20px 22px 24px;
+}
+
+.project-card__title {
+  display: block;
+  margin-top: 7px;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.project-card--status-only {
+  justify-content: center;
+  cursor: default;
+}
+
+.project-card--status-only:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
+
+.project-card--status-only .project-card__copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.project-card--status-only .project-card__title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.project-card__status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
 
 .project-card h2 {
