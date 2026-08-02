@@ -25,6 +25,8 @@
 
   updateThemeButtons();
 
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const projectMedia = {
     catch: {
       src: "assets/projects/catch.webp",
@@ -87,10 +89,9 @@
       position: "center"
     },
     arm3dof: {
-      src: "assets/projects/arm-3dof.webp",
-      alt: "Isometric CAD render of the 3-DOF desktop robot arm",
-      fit: "contain",
-      position: "center"
+      kind: "model",
+      src: "assets/projects/3dofarm.glb?v=20260802-1",
+      alt: "Interactive 3D model of the 3-DOF desktop robot arm"
     },
     hand: {
       src: "assets/projects/robotic-hand.webp",
@@ -182,9 +183,45 @@
       <span class="blueprint-label" style="position:absolute;left:14px;bottom:11px">${label}</span>`;
   }
 
-  function visualMarkup(project, index) {
+  function modelMarkup(project, index, media, context) {
+    const interactive = context === "dialog";
+    const controls = interactive ? "camera-controls" : "";
+    const loading = interactive ? "eager" : "lazy";
+    const cameraOrbit = interactive ? "35deg 68deg 105%" : "35deg 68deg 100%";
+
+    return `<model-viewer class="project-model${interactive ? " project-model--interactive" : " project-model--preview"}"
+        src="${media.src}"
+        alt="${media.alt}"
+        ${controls}
+        ${reduceMotion ? "" : "auto-rotate"}
+        auto-rotate-delay="900"
+        rotation-per-second="12deg"
+        camera-orbit="${cameraOrbit}"
+        min-camera-orbit="auto auto 60%"
+        max-camera-orbit="auto auto 240%"
+        field-of-view="32deg"
+        shadow-intensity="0.75"
+        shadow-softness="0.85"
+        exposure="0.95"
+        tone-mapping="neutral"
+        interaction-prompt="none"
+        touch-action="pan-y"
+        loading="${loading}"
+        ${interactive ? "" : "tabindex=\"-1\""}>
+        <span class="project-model__fallback">3D preview unavailable</span>
+      </model-viewer>
+      <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
+      <span class="blueprint-label project-visual-label">${interactive ? "Drag to orbit · scroll to zoom" : "Interactive CAD model"}</span>
+      ${interactive ? `<button class="model-reset" type="button" data-model-reset aria-label="Reset 3D model view">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 5.3A5.5 5.5 0 1 0 13 11M13.2 5.3V1.8m0 3.5H9.7"/></svg>
+        Reset view
+      </button>` : ""}`;
+  }
+
+  function visualMarkup(project, index, context = "card") {
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
+    if (media.kind === "model") return modelMarkup(project, index, media, context);
     return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" style="object-fit:${media.fit};object-position:${media.position}">
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">${project.category}</span>`;
@@ -201,9 +238,11 @@
       button.type = "button";
       button.dataset.projectIndex = String(index);
       button.setAttribute("aria-label", `Open details for ${project.title}`);
-      const hasMedia = Boolean(projectMedia[project.slug]);
+      const media = projectMedia[project.slug];
+      const hasMedia = Boolean(media);
+      const hasModel = media?.kind === "model";
       button.innerHTML = `
-        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}">${visualMarkup(project, index)}</span>
+        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
           <span class="meta">${project.meta}</span>
           <span role="heading" aria-level="2" style="display:block;font-size:19px;font-weight:600;margin-top:7px;line-height:1.2">${project.title}</span>
@@ -217,8 +256,6 @@
     let direction = 1;
     let pauseUntil = Date.now() + 2200;
     let hovered = false;
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     rail.addEventListener("mouseenter", () => { hovered = true; });
     rail.addEventListener("mouseleave", () => { hovered = false; pauseUntil = Date.now() + 1200; });
     rail.addEventListener("pointerdown", () => { pauseUntil = Date.now() + 3000; });
@@ -251,8 +288,21 @@
       : project.description;
     dialog.querySelector("[data-dialog-tech]").textContent = project.tech;
     const dialogFigure = dialog.querySelector("[data-dialog-figure]");
-    dialogFigure.classList.toggle("project-image-plate", Boolean(projectMedia[project.slug]));
-    dialogFigure.innerHTML = visualMarkup(project, index);
+    const media = projectMedia[project.slug];
+    dialogFigure.classList.toggle("project-image-plate", Boolean(media));
+    dialogFigure.classList.toggle("project-model-plate", media?.kind === "model");
+    dialogFigure.innerHTML = visualMarkup(project, index, "dialog");
+    const model = dialogFigure.querySelector("model-viewer");
+    const reset = dialogFigure.querySelector("[data-model-reset]");
+    if (model && reset) {
+      reset.addEventListener("click", () => {
+        model.setAttribute("camera-orbit", "35deg 68deg 105%");
+        model.setAttribute("camera-target", "auto auto auto");
+        model.setAttribute("field-of-view", "32deg");
+        model.resetTurntableRotation?.(0);
+        model.focus();
+      });
+    }
     const link = dialog.querySelector("[data-dialog-link]");
     if (project.github) {
       link.href = project.github;

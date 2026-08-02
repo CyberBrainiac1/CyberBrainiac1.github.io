@@ -324,6 +324,95 @@ button {
   height: 100%;
 }
 
+.project-model-plate {
+  background:
+    radial-gradient(circle at 72% 26%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 34%),
+    linear-gradient(var(--faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--faint) 1px, transparent 1px),
+    var(--card);
+  background-size: 100% 100%, 28px 28px, 28px 28px, auto;
+}
+
+.project-model {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  --poster-color: transparent;
+  --progress-bar-color: var(--accent);
+  --progress-bar-height: 2px;
+}
+
+.project-model--preview {
+  pointer-events: none;
+}
+
+.project-model--interactive {
+  cursor: grab;
+}
+
+.project-model--interactive:active {
+  cursor: grabbing;
+}
+
+.project-model__fallback {
+  display: none;
+}
+
+model-viewer:not(:defined) .project-model__fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-model-plate .project-card__index,
+.project-model-plate .project-visual-label,
+.model-reset {
+  z-index: 3;
+}
+
+.model-reset {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 29px;
+  padding: 5px 8px;
+  color: var(--accent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border: 1px solid var(--faint);
+  cursor: pointer;
+}
+
+.model-reset:hover,
+.model-reset:focus-visible {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.model-reset svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.35;
+}
+
 .project-visual-label {
   position: absolute;
   bottom: 10px;
@@ -797,6 +886,11 @@ button {
   height: 260px;
   border: 0;
   border-bottom: 1px solid var(--faint);
+}
+
+.project-dialog .project-model-plate {
+  height: min(48vh, 390px);
+  min-height: 320px;
 }
 
 .project-dialog__body {
@@ -1333,6 +1427,11 @@ button {
   .site-header__nav {
     gap: 18px;
     font-size: 9px;
+  }
+
+  .project-dialog .project-model-plate {
+    height: 300px;
+    min-height: 300px;
   }
 
   .home-main,
