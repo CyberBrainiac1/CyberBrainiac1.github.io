@@ -1,19 +1,158 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Redirecting to ESP32 Control</title>
-    <meta http-equiv="refresh" content="0; url=/esp32control/">
-    <link rel="canonical" href="https://cyberbrainiac1.github.io/esp32control/">
-    <script>
-      location.replace("/esp32control/");
-    </script>
-  </head>
-  <body>
-    <p>
-      Redirecting to
-      <a href="/esp32control/">/esp32control/</a>.
-    </p>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pranav Emmadi builds robots, mechatronic systems, and software that moves real hardware.">
+  <title>Pranav Emmadi — Robotics & Mechatronics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.dataset.theme=localStorage.getItem('pe-theme')==='dark'?'dark':'light';</script>
+  <link rel="stylesheet" href="styles.css?v=20260802-2">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="site-header__identity" href="index.html" aria-label="Pranav Emmadi home">P. Emmadi / EVHS ’29</a>
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="projects.html">Projects (22)</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>◐ Dark</button>
+  </header>
+
+  <main id="main" class="home-main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="registration-marks" aria-hidden="true">
+        <span class="registration-mark"></span>
+        <span class="registration-mark"></span>
+        <span class="registration-mark"></span>
+      </div>
+      <h1 id="hero-title">Pranav Emmadi <span>builds hardware that moves.</span></h1>
+      <div class="draw-line" aria-hidden="true"></div>
+      <p class="hero__statement">I build robots, mechatronic systems, and software that moves real hardware.</p>
+
+      <div class="hero__grid">
+        <nav class="hero-nav" aria-label="Portfolio links">
+          <a href="projects.html">Projects <span>→</span></a>
+          <a href="about.html">About me <span>→</span></a>
+          <a href="https://github.com/CyberBrainiac1" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+          <a href="https://www.linkedin.com/in/pranav-emmadi-874723399/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+        </nav>
+        <div class="portrait-plate" aria-label="Pranav Emmadi blueprint monogram">
+          <span class="portrait-plate__initials">PE</span>
+          <span class="portrait-plate__label mono">STUDENT ENGINEER / SAN JOSE, CA</span>
+        </div>
+      </div>
+
+      <div class="body-copy">
+        <p>Hi—I’m Pranav, a 10th grader at Evergreen Valley High School in San Jose. I like building things that move, sense, and respond to the real world.</p>
+        <p>I’ve spent four years in FIRST robotics across FLL, FTC, and FRC. I currently do mechanical work on <a class="inline-link" href="projects.html">FRC 2854</a> and design engineering on <a class="inline-link" href="projects.html">FTC 23425</a>. Outside team seasons, I build robot arms, motion rigs, force-feedback hardware, embedded devices, and physical-AI experiments.</p>
+        <p>I especially like projects where software has to survive contact with real hardware. A simulation can look perfect; motors, belts, sensors, friction, wiring, and manufacturing tolerances make the real system harder—and more interesting.</p>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="focus-title">
+      <div class="section-heading">
+        <span class="section-index">FIG. 01</span>
+        <h2 id="focus-title">Current focus</h2>
+      </div>
+      <article class="focus-panel">
+        <div class="focus-panel__copy">
+          <span class="eyeline">Independent research · 2026–present</span>
+          <h3>CATCH collision-safe robot joint</h3>
+          <p>A low-cost, 3D-printed joint designed to stay rigid during normal operation and passively switch into a softer, still-controllable state during a hard collision. The design uses a cam, bearing roller, constant-force spring, rigid detent region, and catch ramp. It is currently in CAD, prototyping, mathematical modeling, and test planning.</p>
+          <a class="technical-button" href="projects.html" style="margin-top:24px">Open project index →</a>
+        </div>
+        <div class="focus-panel__drawing figure-plate" aria-label="Abstract schematic of the CATCH joint">
+          <svg class="schematic-svg" viewBox="0 0 320 320" role="img" aria-label="Cam, roller, and spring schematic">
+            <g fill="none" stroke="currentColor">
+              <circle cx="140" cy="145" r="78" stroke-width="1.4"/>
+              <path d="M91 88c38 17 67 46 75 94 5 28 26 43 61 41" stroke-width="3"/>
+              <circle cx="211" cy="119" r="19" stroke-width="2"/>
+              <path d="M211 100V48m-11 0h22m-22 9h22m-22 9h22m-22 9h22m-22 9h22" stroke-width="1.2"/>
+              <path d="M42 259h236M55 250v18m210-18v18M65 286h154" stroke-width="1"/>
+              <path d="M74 145h132M140 79v132" stroke-width=".8" stroke-dasharray="5 5"/>
+              <circle cx="140" cy="145" r="8" stroke-width="1.5"/>
+            </g>
+            <g fill="currentColor" font-family="IBM Plex Mono" font-size="9">
+              <text x="226" y="120">ROLLER</text>
+              <text x="226" y="59">SPRING</text>
+              <text x="105" y="244">CAM PROFILE</text>
+              <text x="73" y="301">TRIP THRESHOLD / TEST PENDING</text>
+            </g>
+          </svg>
+        </div>
+      </article>
+    </section>
+
+    <section class="home-section" aria-labelledby="selected-title">
+      <div class="section-heading">
+        <span class="section-index">FIG. 02–05</span>
+        <h2 id="selected-title">Selected builds</h2>
+      </div>
+      <div class="figure-list">
+        <a class="figure-row" href="projects.html">
+          <span class="figure-row__number">02</span>
+          <span class="figure-row__name">SolderBuddy</span>
+          <span class="figure-row__leader"></span>
+          <span class="figure-row__meta">physical AI · 2025</span>
+        </a>
+        <a class="figure-row" href="projects.html">
+          <span class="figure-row__number">03</span>
+          <span class="figure-row__name">EvoLoRA</span>
+          <span class="figure-row__leader"></span>
+          <span class="figure-row__meta">top 6 / 69 · 2026</span>
+        </a>
+        <a class="figure-row" href="projects.html">
+          <span class="figure-row__number">04</span>
+          <span class="figure-row__name">Blind Spot</span>
+          <span class="figure-row__leader"></span>
+          <span class="figure-row__meta">winner · 2026</span>
+        </a>
+        <a class="figure-row" href="projects.html">
+          <span class="figure-row__number">05</span>
+          <span class="figure-row__name">DIY force-feedback wheel</span>
+          <span class="figure-row__leader"></span>
+          <span class="figure-row__meta">mechatronics · ongoing</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="recognition-title">
+      <div class="section-heading">
+        <span class="section-index">REV. 2026</span>
+        <h2 id="recognition-title">Recent recognition</h2>
+      </div>
+      <div class="award-band">
+        <div class="award-band__item"><span class="meta">JAN 2026</span><strong>FTC Control Award</strong><span>NorCal FIRST Tech Challenge</span></div>
+        <div class="award-band__item"><span class="meta">MAR 2026</span><strong>Winner</strong><span>BISV Hacks · FamiliarAI</span></div>
+        <div class="award-band__item"><span class="meta">JUN 2026</span><strong>Winner</strong><span>Milpitas Hacks 3 · Blind Spot</span></div>
+        <div class="award-band__item"><span class="meta">JUN 2026</span><strong>Top 6 of 69</strong><span>AI Engineer World’s Fair · EvoLoRA</span></div>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="contact-title">
+      <div class="section-heading">
+        <span class="section-index">CONTACT</span>
+        <h2 id="contact-title">Build something real.</h2>
+      </div>
+      <div class="contact-panel">
+        <p>I’m interested in connecting with robotics engineers, researchers, mentors, makers, and other students working in mechanical engineering, CAD, mechatronics, robot safety, physical AI, simulation, and prototype testing.</p>
+        <div class="contact-links">
+          <a class="technical-button" href="https://www.linkedin.com/in/pranav-emmadi-874723399/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a class="technical-button" href="https://github.com/CyberBrainiac1" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="dimension-line"><span>I build, test, break, and improve physical systems until they work.</span></div>
+    <div class="footer-line"><span>Evergreen Valley High School</span><span>San Jose, California · Class of 2029</span></div>
+  </footer>
+</body>
 </html>

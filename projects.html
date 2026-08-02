@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Robotics, mechatronics, physical AI, embedded systems, and competition projects by Pranav Emmadi.">
+  <title>Projects — Pranav Emmadi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.dataset.theme=localStorage.getItem('pe-theme')==='dark'?'dark':'light';</script>
+  <link rel="stylesheet" href="styles.css?v=20260802-2">
+  <script src="projects-data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body class="projects-page">
+  <a class="skip-link" href="#main">Skip to projects</a>
+  <header class="site-header">
+    <a class="site-header__identity" href="index.html">← Pranav Emmadi</a>
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects (22)</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle>◐ Dark</button>
+  </header>
+
+  <main id="main" class="projects-layout">
+    <div class="projects-intro">
+      <h1>Projects</h1>
+      <p><span class="desktop-instruction">Scroll to browse sideways · click a card for details</span><span class="mobile-instruction">Scroll to browse the index · tap a card for details</span></p>
+    </div>
+    <section class="project-rail" data-project-rail aria-label="Project index"></section>
+    <div class="award-rail">
+      <span>FTC Control Award ’26 · Winner—Milpitas Hacks 3 · Winner—BISV Hacks ’26 · Top 6/69—AI Engineer World’s Fair</span>
+      <span class="project-count">22 projects</span>
+    </div>
+  </main>
+
+  <dialog class="project-dialog" data-project-dialog aria-labelledby="dialog-title">
+    <div class="project-dialog__header">
+      <span class="meta" data-dialog-meta></span>
+      <button class="project-dialog__close" type="button" aria-label="Close project details" data-dialog-close>×</button>
+    </div>
+    <div class="figure-plate" data-dialog-figure></div>
+    <div class="project-dialog__body">
+      <h2 id="dialog-title" data-dialog-title></h2>
+      <p class="project-dialog__description" data-dialog-description></p>
+      <p class="project-tech" data-dialog-tech></p>
+      <a class="project-link" data-dialog-link target="_blank" rel="noreferrer">View on GitHub ↗</a>
+    </div>
+  </dialog>
+</body>
+</html>

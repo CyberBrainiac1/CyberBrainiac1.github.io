@@ -1,689 +1,286 @@
-const STORAGE_KEY = "peoplelog-v2-entries";
-const EMPTY_PHOTO_TEXT = "No photo attached yet.";
+(() => {
+  const root = document.documentElement;
+  const themeButtons = [...document.querySelectorAll("[data-theme-toggle]")];
 
-const state = {
-  entryType: "contact",
-  entries: [],
-  filtered: [],
-  editingId: null,
-  photoDataUrl: "",
-};
-
-const elements = {
-  form: document.getElementById("entry-form"),
-  formTitle: document.getElementById("form-title"),
-  nameLabel: document.getElementById("name-label"),
-  companyLabel: document.getElementById("company-label"),
-  contextLabel: document.getElementById("context-label"),
-  name: document.getElementById("name"),
-  company: document.getElementById("company"),
-  email: document.getElementById("email"),
-  phone: document.getElementById("phone"),
-  linkedProject: document.getElementById("linked-project"),
-  linkedin: document.getElementById("linkedin"),
-  context: document.getElementById("context"),
-  emailField: document.getElementById("email-field"),
-  phoneField: document.getElementById("phone-field"),
-  projectField: document.getElementById("project-field"),
-  linkedinField: document.getElementById("linkedin-field"),
-  saveEntry: document.getElementById("save-entry"),
-  resetForm: document.getElementById("reset-form"),
-  status: document.getElementById("status"),
-  search: document.getElementById("search"),
-  directory: document.getElementById("directory"),
-  emptyState: document.getElementById("empty-state"),
-  filteredCount: document.getElementById("filtered-count"),
-  entryCount: document.getElementById("entry-count"),
-  importFile: document.getElementById("import-file"),
-  loadPublished: document.getElementById("load-published"),
-  exportJSON: document.getElementById("export-json"),
-  exportCSV: document.getElementById("export-csv"),
-  installState: document.getElementById("install-state"),
-  typeContact: document.getElementById("type-contact"),
-  typeProject: document.getElementById("type-project"),
-  photoInput: document.getElementById("photo-input"),
-  clearPhoto: document.getElementById("clear-photo"),
-  photoPreview: document.getElementById("photo-preview"),
-};
-
-wireEvents();
-loadLocalEntries();
-renderProjectOptions();
-setEntryType("contact");
-applyFilter();
-updateInstallState();
-registerServiceWorker();
-
-function wireEvents() {
-  elements.typeContact.addEventListener("click", () => setEntryType("contact"));
-  elements.typeProject.addEventListener("click", () => setEntryType("project"));
-  elements.form.addEventListener("submit", handleSubmit);
-  elements.resetForm.addEventListener("click", resetForm);
-  elements.search.addEventListener("input", applyFilter);
-  elements.importFile.addEventListener("change", handleImportFile);
-  elements.loadPublished.addEventListener("click", loadPublishedSeed);
-  elements.exportJSON.addEventListener("click", exportJSON);
-  elements.exportCSV.addEventListener("click", exportCSV);
-  elements.photoInput.addEventListener("change", handlePhotoSelection);
-  elements.clearPhoto.addEventListener("click", clearPhoto);
-}
-
-function setEntryType(type) {
-  state.entryType = type;
-  const isProject = type === "project";
-
-  elements.typeContact.classList.toggle("active", !isProject);
-  elements.typeProject.classList.toggle("active", isProject);
-
-  elements.formTitle.textContent = state.editingId
-    ? isProject ? "Edit project" : "Edit contact"
-    : isProject ? "New project" : "New contact";
-  elements.nameLabel.textContent = isProject ? "Project Name" : "Name";
-  elements.companyLabel.textContent = isProject ? "Company / Place" : "Company / Role";
-  elements.contextLabel.textContent = isProject ? "Project Notes" : "Context";
-  elements.name.placeholder = isProject ? "Surgical robotics prototype" : "Avery Chen";
-  elements.company.placeholder = isProject ? "Intuitive booth 24" : "Intuitive, Mechanical Engineer";
-  elements.saveEntry.textContent = state.editingId
-    ? isProject ? "Update project" : "Update contact"
-    : isProject ? "Save project" : "Save contact";
-
-  elements.emailField.hidden = isProject;
-  elements.phoneField.hidden = isProject;
-  elements.projectField.hidden = isProject;
-  elements.linkedinField.hidden = isProject;
-}
-
-function loadLocalEntries() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    state.entries = normalizeEntries(raw ? JSON.parse(raw) : []);
-  } catch {
-    state.entries = [];
-    setStatus("Local data could not be read, so the app started fresh.", true);
-  }
-}
-
-function persistEntries(message) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sortEntries(state.entries)));
-  renderProjectOptions();
-  applyFilter();
-  if (message) {
-    setStatus(message, false);
-  }
-}
-
-function handleSubmit(event) {
-  event.preventDefault();
-
-  const draft = readFormDraft();
-  if (!canSave(draft)) {
-    setStatus("Add a name, then include at least one identity detail for contacts.", true);
-    return;
+  function activeTheme() {
+    return root.dataset.theme === "dark" ? "dark" : "light";
   }
 
-  const now = new Date().toISOString();
-  const incoming = {
-    id: state.editingId || crypto.randomUUID(),
-    entryType: state.entryType,
-    name: draft.name,
-    company: draft.company,
-    email: draft.email,
-    phone: draft.phone,
-    linkedProjectName: draft.linkedProjectName,
-    linkedInURL: draft.linkedInURL,
-    context: draft.context,
-    photoDataUrl: state.photoDataUrl,
-    createdAt: now,
-    updatedAt: now,
-  };
-
-  const result = upsertEntry(incoming);
-  persistEntries(result === "updated" ? "Existing entry updated." : "Entry saved locally on this iPhone/browser.");
-  resetForm();
-}
-
-function readFormDraft() {
-  return {
-    name: elements.name.value.trim(),
-    company: elements.company.value.trim(),
-    email: elements.email.value.trim().toLowerCase(),
-    phone: elements.phone.value.trim(),
-    linkedProjectName: elements.linkedProject.value.trim(),
-    linkedInURL: elements.linkedin.value.trim(),
-    context: elements.context.value.trim(),
-  };
-}
-
-function canSave(entry) {
-  if (!entry.name) {
-    return false;
+  function updateThemeButtons() {
+    const dark = activeTheme() === "dark";
+    themeButtons.forEach((button) => {
+      button.textContent = dark ? "◑ Light" : "◐ Dark";
+      button.setAttribute("aria-label", dark ? "Use light theme" : "Use dark theme");
+    });
   }
 
-  if (state.entryType === "project") {
-    return true;
-  }
-
-  return Boolean(entry.email || entry.phone || entry.linkedInURL || entry.linkedProjectName);
-}
-
-function upsertEntry(incoming) {
-  const existingIndex = state.entries.findIndex((entry) => matchesIdentity(entry, incoming));
-
-  if (existingIndex === -1) {
-    state.entries.unshift(incoming);
-    return "created";
-  }
-
-  const previous = state.entries[existingIndex];
-  state.entries[existingIndex] = {
-    ...previous,
-    ...incoming,
-    id: previous.id,
-    createdAt: previous.createdAt || incoming.createdAt,
-    photoDataUrl: incoming.photoDataUrl || previous.photoDataUrl || "",
-    updatedAt: incoming.updatedAt,
-  };
-  return "updated";
-}
-
-function matchesIdentity(existing, incoming) {
-  if (state.editingId) {
-    return existing.id === state.editingId;
-  }
-
-  if (existing.entryType !== incoming.entryType) {
-    return false;
-  }
-
-  if (existing.entryType === "project") {
-    return normalizeText(existing.name) === normalizeText(incoming.name);
-  }
-
-  const existingKeys = identityKeys(existing);
-  const incomingKeys = identityKeys(incoming);
-  return incomingKeys.some((key) => existingKeys.includes(key));
-}
-
-function identityKeys(entry) {
-  const keys = [];
-  const email = normalizeText(entry.email);
-  const phone = normalizePhone(entry.phone);
-  const linkedin = normalizeLinkedIn(entry.linkedInURL);
-  const name = normalizeText(entry.name);
-
-  if (email) keys.push(`email:${email}`);
-  if (phone) keys.push(`phone:${phone}`);
-  if (linkedin) keys.push(`linkedin:${linkedin}`);
-  if (name) keys.push(`name:${name}`);
-
-  return keys;
-}
-
-function renderProjectOptions() {
-  const projects = state.entries
-    .filter((entry) => entry.entryType === "project")
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const currentValue = elements.linkedProject.value;
-  elements.linkedProject.innerHTML = '<option value="">No linked project</option>';
-
-  for (const project of projects) {
-    const option = document.createElement("option");
-    option.value = project.name;
-    option.textContent = project.name;
-    elements.linkedProject.append(option);
-  }
-
-  if ([...elements.linkedProject.options].some((option) => option.value === currentValue)) {
-    elements.linkedProject.value = currentValue;
-  }
-}
-
-function applyFilter() {
-  const query = elements.search.value.trim().toLowerCase();
-  const sorted = sortEntries(state.entries);
-
-  state.filtered = query
-    ? sorted.filter((entry) =>
-        [
-          entry.entryType,
-          entry.name,
-          entry.company,
-          entry.email,
-          entry.phone,
-          entry.linkedProjectName,
-          entry.linkedInURL,
-          entry.context,
-        ]
-          .join("\n")
-          .toLowerCase()
-          .includes(query)
-      )
-    : sorted;
-
-  renderDirectory();
-  elements.filteredCount.textContent = `${state.filtered.length} showing`;
-  elements.entryCount.textContent = `${state.entries.length} saved`;
-}
-
-function renderDirectory() {
-  elements.directory.innerHTML = "";
-
-  if (!state.filtered.length) {
-    elements.directory.append(elements.emptyState.content.cloneNode(true));
-    return;
-  }
-
-  for (const entry of state.filtered) {
-    const article = document.createElement("article");
-    article.className = "entry";
-
-    const chips = [
-      entry.email ? `<span class="chip">${escapeHTML(entry.email)}</span>` : "",
-      entry.phone ? `<span class="chip">${escapeHTML(entry.phone)}</span>` : "",
-      entry.company ? `<span class="chip">${escapeHTML(entry.company)}</span>` : "",
-      entry.linkedProjectName ? `<span class="chip">Project: ${escapeHTML(entry.linkedProjectName)}</span>` : "",
-    ]
-      .filter(Boolean)
-      .join("");
-
-    article.innerHTML = `
-      <div class="entry-head">
-        <div class="entry-title">
-          <span class="entry-type">${entry.entryType === "project" ? "Project" : "Contact"}</span>
-          <h3>${escapeHTML(entry.name || "Untitled")}</h3>
-          <p class="meta-stack">${escapeHTML(formatUpdatedAt(entry.updatedAt))}</p>
-        </div>
-      </div>
-      <div class="entry-body">
-        <div class="entry-copy">
-          <div class="chip-row">${chips}</div>
-          ${entry.context ? `<p class="entry-context">${escapeHTML(entry.context)}</p>` : ""}
-          <div class="card-actions">
-            ${entry.linkedInURL ? `<a class="text-button" href="${escapeAttribute(entry.linkedInURL)}" target="_blank" rel="noreferrer">Open LinkedIn</a>` : ""}
-            <button class="text-button" type="button" data-action="edit" data-id="${entry.id}">Edit</button>
-            <button class="text-button danger" type="button" data-action="delete" data-id="${entry.id}">Delete</button>
-          </div>
-        </div>
-        ${entry.photoDataUrl ? `<img class="entry-photo" src="${entry.photoDataUrl}" alt="${escapeAttribute(entry.name)}">` : ""}
-      </div>
-    `;
-
-    elements.directory.append(article);
-  }
-
-  for (const button of elements.directory.querySelectorAll("[data-action='edit']")) {
-    button.addEventListener("click", () => beginEdit(button.dataset.id));
-  }
-
-  for (const button of elements.directory.querySelectorAll("[data-action='delete']")) {
-    button.addEventListener("click", () => deleteEntry(button.dataset.id));
-  }
-}
-
-function beginEdit(entryId) {
-  const entry = state.entries.find((item) => item.id === entryId);
-  if (!entry) {
-    return;
-  }
-
-  state.editingId = entry.id;
-  setEntryType(entry.entryType);
-  elements.name.value = entry.name;
-  elements.company.value = entry.company;
-  elements.email.value = entry.email;
-  elements.phone.value = entry.phone;
-  elements.linkedProject.value = entry.linkedProjectName;
-  elements.linkedin.value = entry.linkedInURL;
-  elements.context.value = entry.context;
-  state.photoDataUrl = entry.photoDataUrl || "";
-  renderPhotoPreview();
-  setStatus(`Loaded ${entry.name} into the form. Saving will update the existing entry.`, false);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function deleteEntry(entryId) {
-  const entry = state.entries.find((item) => item.id === entryId);
-  if (!entry) {
-    return;
-  }
-
-  const confirmed = window.confirm(`Delete ${entry.name}? This cannot be undone unless you exported a backup.`);
-  if (!confirmed) {
-    return;
-  }
-
-  state.entries = state.entries.filter((item) => item.id !== entryId);
-  if (state.editingId === entryId) {
-    resetForm();
-  }
-  persistEntries(`${entry.name} was deleted.`);
-}
-
-function resetForm() {
-  state.editingId = null;
-  state.photoDataUrl = "";
-  elements.form.reset();
-  renderPhotoPreview();
-  setEntryType("contact");
-}
-
-async function handleImportFile(event) {
-  const file = event.target.files?.[0];
-  if (!file) {
-    return;
-  }
-
-  try {
-    const text = await file.text();
-    const imported = file.name.toLowerCase().endsWith(".csv")
-      ? parseCSV(text)
-      : normalizeEntries(JSON.parse(text));
-
-    mergeImportedEntries(imported);
-    persistEntries(`Imported ${imported.length} entr${imported.length === 1 ? "y" : "ies"} from ${file.name}.`);
-  } catch {
-    setStatus("That file could not be imported.", true);
-  } finally {
-    elements.importFile.value = "";
-  }
-}
-
-async function loadPublishedSeed() {
-  try {
-    const response = await fetch("./people-log-directory.json", { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("missing");
-    }
-
-    const imported = normalizeEntries(await response.json());
-    mergeImportedEntries(imported);
-    persistEntries(`Loaded ${imported.length} published entr${imported.length === 1 ? "y" : "ies"} into local storage.`);
-  } catch {
-    setStatus("No published seed file is available right now.", true);
-  }
-}
-
-function mergeImportedEntries(imported) {
-  for (const entry of imported) {
-    const previousType = state.entryType;
-    state.entryType = entry.entryType;
-    upsertEntry(entry);
-    state.entryType = previousType;
-  }
-}
-
-function exportJSON() {
-  const content = JSON.stringify(sortEntries(state.entries), null, 2);
-  downloadFile("people-log-v2.json", "application/json", content);
-  setStatus("JSON backup exported.", false);
-}
-
-function exportCSV() {
-  const header = [
-    "id",
-    "entryType",
-    "name",
-    "email",
-    "phone",
-    "company",
-    "linkedInURL",
-    "linkedProjectName",
-    "context",
-    "photoDataUrl",
-    "createdAt",
-    "updatedAt",
-  ];
-
-  const lines = [
-    header.join(","),
-    ...sortEntries(state.entries).map((entry) =>
-      header
-        .map((key) => escapeCSV(entry[key] || ""))
-        .join(",")
-    ),
-  ];
-
-  downloadFile("people-log-v2.csv", "text/csv;charset=utf-8", `${lines.join("\n")}\n`);
-  setStatus("CSV backup exported.", false);
-}
-
-function downloadFile(fileName, type, content) {
-  const blob = new Blob([content], { type });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = fileName;
-  anchor.click();
-  URL.revokeObjectURL(url);
-}
-
-async function handlePhotoSelection(event) {
-  const file = event.target.files?.[0];
-  if (!file) {
-    return;
-  }
-
-  try {
-    state.photoDataUrl = await compressImage(file);
-    renderPhotoPreview();
-    setStatus("Photo attached.", false);
-  } catch {
-    setStatus("That photo could not be processed.", true);
-  } finally {
-    elements.photoInput.value = "";
-  }
-}
-
-function clearPhoto() {
-  state.photoDataUrl = "";
-  renderPhotoPreview();
-}
-
-function renderPhotoPreview() {
-  if (!state.photoDataUrl) {
-    elements.photoPreview.classList.add("empty");
-    elements.photoPreview.innerHTML = `<span>${EMPTY_PHOTO_TEXT}</span>`;
-    return;
-  }
-
-  elements.photoPreview.classList.remove("empty");
-  elements.photoPreview.innerHTML = `<img src="${state.photoDataUrl}" alt="Attached preview">`;
-}
-
-function normalizeEntries(entries) {
-  if (!Array.isArray(entries)) {
-    return [];
-  }
-
-  return entries
-    .map((entry) => ({
-      id: entry.id || crypto.randomUUID(),
-      entryType: entry.entryType === "project" ? "project" : "contact",
-      name: String(entry.name || "").trim(),
-      email: String(entry.email || "").trim().toLowerCase(),
-      phone: String(entry.phone || "").trim(),
-      company: String(entry.company || "").trim(),
-      linkedInURL: String(entry.linkedInURL || entry.linkedin || "").trim(),
-      linkedProjectName: String(entry.linkedProjectName || entry.linkedproject || entry.project || "").trim(),
-      context: String(entry.context || "").trim(),
-      photoDataUrl: String(entry.photoDataUrl || entry.photo || "").trim(),
-      createdAt: entry.createdAt || entry.created_at || new Date().toISOString(),
-      updatedAt: entry.updatedAt || entry.updated_at || entry.createdAt || new Date().toISOString(),
-    }))
-    .filter((entry) => entry.name);
-}
-
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let field = "";
-  let insideQuotes = false;
-
-  for (let index = 0; index < text.length; index += 1) {
-    const character = text[index];
-    const next = text[index + 1];
-
-    if (insideQuotes) {
-      if (character === '"' && next === '"') {
-        field += '"';
-        index += 1;
-      } else if (character === '"') {
-        insideQuotes = false;
-      } else {
-        field += character;
-      }
-      continue;
-    }
-
-    if (character === '"') {
-      insideQuotes = true;
-    } else if (character === ",") {
-      row.push(field);
-      field = "";
-    } else if (character === "\n") {
-      row.push(field);
-      rows.push(row);
-      row = [];
-      field = "";
-    } else if (character !== "\r") {
-      field += character;
-    }
-  }
-
-  if (field || row.length) {
-    row.push(field);
-    rows.push(row);
-  }
-
-  const [header, ...values] = rows;
-  if (!header) {
-    return [];
-  }
-
-  const keys = header.map((value) =>
-    value
-      .trim()
-      .toLowerCase()
-      .replaceAll("_", "")
-      .replaceAll(" ", "")
-  );
-
-  return normalizeEntries(
-    values.map((columns) =>
-      Object.fromEntries(
-        keys.map((key, index) => [key, columns[index] || ""])
-      )
-    )
-  );
-}
-
-function sortEntries(entries) {
-  return [...entries].sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
-}
-
-function formatUpdatedAt(value) {
-  if (!value) {
-    return "Recently updated";
-  }
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return "Recently updated";
-  }
-
-  return `Updated ${date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`;
-}
-
-function setStatus(message, isError) {
-  elements.status.textContent = message;
-  elements.status.classList.toggle("error", Boolean(isError));
-}
-
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
-}
-
-function normalizePhone(value) {
-  return String(value || "").replace(/\D/g, "");
-}
-
-function normalizeLinkedIn(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/^https?:\/\//, "")
-    .replace(/\/+$/, "");
-}
-
-function escapeCSV(value) {
-  const stringValue = String(value ?? "");
-  const escaped = stringValue.replaceAll('"', '""');
-  return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped;
-}
-
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function escapeAttribute(value) {
-  return escapeHTML(value);
-}
-
-function updateInstallState() {
-  const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
-  if (standalone) {
-    elements.installState.textContent = "Running from your Home Screen.";
-    elements.installState.classList.remove("browser");
-    return;
-  }
-
-  elements.installState.textContent = "Open in Safari on iPhone, then use Add to Home Screen.";
-  elements.installState.classList.add("browser");
-}
-
-function registerServiceWorker() {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  }
-}
-
-function compressImage(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const image = new Image();
-      image.onload = () => {
-        const maxDimension = 1200;
-        const scale = Math.min(maxDimension / image.width, maxDimension / image.height, 1);
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.round(image.width * scale);
-        canvas.height = Math.round(image.height * scale);
-        const context = canvas.getContext("2d");
-
-        if (!context) {
-          reject(new Error("Canvas unavailable"));
-          return;
-        }
-
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.82));
-      };
-
-      image.onerror = reject;
-      image.src = reader.result;
-    };
-
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+  themeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const next = activeTheme() === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      localStorage.setItem("pe-theme", next);
+      updateThemeButtons();
+    });
   });
-}
+
+  updateThemeButtons();
+
+  const projectMedia = {
+    catch: {
+      src: "assets/projects/catch.webp",
+      alt: "Onshape view of the CATCH cam, roller, and joint assembly",
+      fit: "cover",
+      position: "center"
+    },
+    solderbuddy: {
+      src: "assets/projects/solderbuddy.webp",
+      alt: "SolderBuddy robot arm beside soldering tools",
+      fit: "cover",
+      position: "center"
+    },
+    evolora: {
+      src: "assets/projects/evolora.webp",
+      alt: "EvoLoRA terminal interface during a representative training run",
+      fit: "cover",
+      position: "center"
+    },
+    blindspot: {
+      src: "assets/projects/blindspot.webp",
+      alt: "Blind Spot phone mockup showing the rider hazard map",
+      fit: "contain",
+      position: "center"
+    },
+    familiarai: {
+      src: "assets/projects/familiarai.webp",
+      alt: "FamiliarAI caregiver application landing screen",
+      fit: "cover",
+      position: "center"
+    },
+    motionrig: {
+      src: "assets/projects/motion-rig.webp",
+      alt: "Wooden dual-motor sim-racing motion rig under construction",
+      fit: "cover",
+      position: "center"
+    },
+    translator: {
+      src: "assets/projects/motion-translator.webp",
+      alt: "2DOF motion-rig translator calibration and control interface",
+      fit: "contain",
+      position: "center top"
+    },
+    ffbwheel: {
+      src: "assets/projects/ffb-wheel.webp",
+      alt: "DIY force-feedback steering wheel hardware and wiring",
+      fit: "cover",
+      position: "center"
+    },
+    controlcenter: {
+      src: "assets/projects/wheel-control-center.webp",
+      alt: "BTS7960 force-feedback wheel Control Center dashboard",
+      fit: "cover",
+      position: "left top"
+    },
+    ffbtester: {
+      src: "assets/projects/ffb-tester.webp",
+      alt: "EMC force-feedback tester desktop application",
+      fit: "cover",
+      position: "center"
+    },
+    arm3dof: {
+      src: "assets/projects/arm-3dof.webp",
+      alt: "Isometric CAD render of the 3-DOF desktop robot arm",
+      fit: "contain",
+      position: "center"
+    },
+    hand: {
+      src: "assets/projects/robotic-hand.webp",
+      alt: "CAD model of the tendon-driven robotic hand",
+      fit: "cover",
+      position: "center"
+    },
+    kineticcam: {
+      src: "assets/projects/kinetic-cam.webp",
+      alt: "CAD render of the Kinetic Cam mechanical camera head",
+      fit: "contain",
+      position: "center"
+    },
+    chessboard: {
+      src: "assets/projects/ai-chess-board.webp",
+      alt: "CAD render of the automated AI chess board",
+      fit: "contain",
+      position: "center"
+    },
+    esp32: {
+      src: "assets/projects/esp32-control.svg",
+      alt: "ESP32 Wi-Fi and Bluetooth servo-control application icon",
+      fit: "contain",
+      position: "center"
+    },
+    cyberpad: {
+      src: "assets/projects/cyberpad.webp",
+      alt: "Completed CyberPad RP2040 macropad hardware",
+      fit: "cover",
+      position: "center"
+    },
+    pedal: {
+      src: "assets/projects/sim-pedal.webp",
+      alt: "DIY sim-racing pedal sensor mechanism",
+      fit: "cover",
+      position: "center"
+    },
+    chassis: {
+      src: "assets/projects/wooden-sim-racing-chassis.webp",
+      alt: "Completed wooden sim-racing chassis with wheel, pedals, and seat",
+      fit: "cover",
+      position: "center"
+    },
+    frc: {
+      src: "assets/projects/frc-2854.webp",
+      alt: "Onshape isometric view of the FRC 2854 competition robot",
+      fit: "cover",
+      position: "center"
+    },
+    ftc: {
+      src: "assets/projects/ftc-dragons.webp",
+      alt: "FTC Evergreen Dragons robot with mechanism callouts",
+      fit: "contain",
+      position: "center"
+    }
+  };
+
+  function schematicMarkup(index, label) {
+    const variant = index % 5;
+    const diagrams = [
+      `<g fill="none" stroke="currentColor" stroke-width="1.25">
+        <circle cx="128" cy="78" r="38"/><circle cx="128" cy="78" r="8"/>
+        <path d="M38 125h58l18-34h28l18 34h62"/><path d="M40 42h40m96 0h40"/>
+        <path d="M80 34v16m96-16v16M50 140v18m156-18v18"/>
+      </g>`,
+      `<g fill="none" stroke="currentColor" stroke-width="1.25">
+        <path d="M40 132V62h42l20 18h56l20-18h38v70"/><path d="M28 132h200"/>
+        <circle cx="82" cy="112" r="18"/><circle cx="174" cy="112" r="18"/>
+        <path d="M82 94V62m92 32V62M62 44h132"/>
+      </g>`,
+      `<g fill="none" stroke="currentColor" stroke-width="1.25">
+        <rect x="52" y="42" width="152" height="96"/><path d="M52 74h152M92 42v96m72-96v96"/>
+        <circle cx="92" cy="74" r="20"/><path d="M28 150h200M36 143v14m184-14v14"/>
+      </g>`,
+      `<g fill="none" stroke="currentColor" stroke-width="1.25">
+        <path d="M34 126c40-72 72-72 106 0 23-52 49-52 82 0"/>
+        <path d="M34 126h188M72 92v34m68-54v54m44-28v28"/>
+        <circle cx="72" cy="92" r="7"/><circle cx="140" cy="72" r="7"/><circle cx="184" cy="98" r="7"/>
+      </g>`,
+      `<g fill="none" stroke="currentColor" stroke-width="1.25">
+        <path d="M42 134h172M58 134V78h34l18-26h38l18 26h32v56"/>
+        <path d="M92 78h74M110 52v82m38-82v82"/>
+        <circle cx="58" cy="134" r="6"/><circle cx="198" cy="134" r="6"/>
+      </g>`
+    ];
+
+    return `<span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
+      <svg class="schematic-svg" viewBox="0 0 256 172" aria-hidden="true">
+        <g opacity=".16" stroke="currentColor" stroke-width=".6">
+          <path d="M0 28h256M0 56h256M0 84h256M0 112h256M0 140h256"/>
+          <path d="M28 0v172M56 0v172M84 0v172M112 0v172M140 0v172M168 0v172M196 0v172M224 0v172"/>
+        </g>
+        ${diagrams[variant]}
+      </svg>
+      <span class="blueprint-label" style="position:absolute;left:14px;bottom:11px">${label}</span>`;
+  }
+
+  function visualMarkup(project, index) {
+    const media = projectMedia[project.slug];
+    if (!media) return schematicMarkup(index, project.category);
+    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" style="object-fit:${media.fit};object-position:${media.position}">
+      <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
+      <span class="blueprint-label project-visual-label">${project.category}</span>`;
+  }
+
+  const rail = document.querySelector("[data-project-rail]");
+  const dialog = document.querySelector("[data-project-dialog]");
+  const projects = window.portfolioProjects || [];
+
+  if (rail && projects.length) {
+    const cards = projects.map((project, index) => {
+      const button = document.createElement("button");
+      button.className = "project-card";
+      button.type = "button";
+      button.dataset.projectIndex = String(index);
+      button.setAttribute("aria-label", `Open details for ${project.title}`);
+      const hasMedia = Boolean(projectMedia[project.slug]);
+      button.innerHTML = `
+        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}">${visualMarkup(project, index)}</span>
+        <span class="project-card__copy">
+          <span class="meta">${project.meta}</span>
+          <span role="heading" aria-level="2" style="display:block;font-size:19px;font-weight:600;margin-top:7px;line-height:1.2">${project.title}</span>
+          <span style="display:block;color:var(--muted);font-size:13px;line-height:1.55;margin-top:7px">${project.one}</span>
+        </span>`;
+      button.addEventListener("click", () => openProject(index));
+      return button;
+    });
+    rail.append(...cards);
+
+    let direction = 1;
+    let pauseUntil = Date.now() + 2200;
+    let hovered = false;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    rail.addEventListener("mouseenter", () => { hovered = true; });
+    rail.addEventListener("mouseleave", () => { hovered = false; pauseUntil = Date.now() + 1200; });
+    rail.addEventListener("pointerdown", () => { pauseUntil = Date.now() + 3000; });
+    rail.addEventListener("wheel", (event) => {
+      if (innerWidth <= 820) return;
+      event.preventDefault();
+      rail.scrollLeft += event.deltaY + event.deltaX;
+      pauseUntil = Date.now() + 1800;
+    }, { passive: false });
+
+    function drift() {
+      if (!reduceMotion && innerWidth > 820 && !hovered && !dialog?.open && Date.now() > pauseUntil) {
+        rail.scrollLeft += 0.45 * direction;
+        if (rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 1) direction = -1;
+        if (rail.scrollLeft <= 0) direction = 1;
+      }
+      requestAnimationFrame(drift);
+    }
+
+    requestAnimationFrame(drift);
+  }
+
+  function openProject(index) {
+    if (!dialog) return;
+    const project = projects[index];
+    dialog.querySelector("[data-dialog-meta]").textContent = project.meta;
+    dialog.querySelector("[data-dialog-title]").textContent = project.title;
+    dialog.querySelector("[data-dialog-description]").textContent = Array.isArray(project.description)
+      ? project.description.join("\n\n")
+      : project.description;
+    dialog.querySelector("[data-dialog-tech]").textContent = project.tech;
+    const dialogFigure = dialog.querySelector("[data-dialog-figure]");
+    dialogFigure.classList.toggle("project-image-plate", Boolean(projectMedia[project.slug]));
+    dialogFigure.innerHTML = visualMarkup(project, index);
+    const link = dialog.querySelector("[data-dialog-link]");
+    if (project.github) {
+      link.href = project.github;
+      link.hidden = false;
+    } else {
+      link.hidden = true;
+      link.removeAttribute("href");
+    }
+    document.body.classList.add("modal-open");
+    dialog.showModal();
+  }
+
+  if (dialog) {
+    const closeButton = dialog.querySelector("[data-dialog-close]");
+    const close = () => {
+      dialog.close();
+      document.body.classList.remove("modal-open");
+    };
+    closeButton.addEventListener("click", close);
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) close();
+    });
+    dialog.addEventListener("close", () => document.body.classList.remove("modal-open"));
+  }
+})();
