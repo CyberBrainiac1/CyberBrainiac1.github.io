@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>document.documentElement.dataset.theme=localStorage.getItem('pe-theme')==='dark'?'dark':'light';</script>
-  <link rel="stylesheet" href="styles.css?v=20260802-3">
+  <link rel="stylesheet" href="styles.css?v=20260802-4">
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -44,14 +44,61 @@
       <h2 id="process-title" class="about-grid__label">02 / Process</h2>
       <div class="about-grid__body">
         <h3>How I work</h3>
-        <ol class="process-list">
-          <li>Research similar systems and past solutions.</li>
-          <li>Identify the most important mechanical and technical constraints.</li>
-          <li>Sketch possible mechanisms and create the design in CAD.</li>
-          <li>Build a prototype and integrate motors, sensors, electronics, and software.</li>
-          <li>Test under realistic conditions and find the failure points.</li>
-          <li>Modify the design, measure the result, and test it again.</li>
-        </ol>
+        <div class="process-cycle" aria-label="An iterative six-stage engineering design process">
+          <svg class="process-cycle__orbit" viewBox="0 0 640 640" aria-hidden="true">
+            <defs>
+              <marker id="process-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+            <circle class="process-cycle__guide" cx="320" cy="320" r="174"/>
+            <path d="M320 146 A174 174 0 0 1 470.7 233" marker-end="url(#process-arrow)"/>
+            <path d="M470.7 233 A174 174 0 0 1 470.7 407" marker-end="url(#process-arrow)"/>
+            <path d="M470.7 407 A174 174 0 0 1 320 494" marker-end="url(#process-arrow)"/>
+            <path d="M320 494 A174 174 0 0 1 169.3 407" marker-end="url(#process-arrow)"/>
+            <path d="M169.3 407 A174 174 0 0 1 169.3 233" marker-end="url(#process-arrow)"/>
+            <path d="M169.3 233 A174 174 0 0 1 320 146" marker-end="url(#process-arrow)"/>
+          </svg>
+
+          <div class="process-cycle__core" aria-hidden="true">
+            <span>ENGINEERING</span>
+            <strong>DESIGN<br>LOOP</strong>
+            <span>MEASURE · IMPROVE</span>
+          </div>
+
+          <ol class="process-cycle__stages">
+            <li class="process-stage">
+              <span class="process-stage__number">01</span>
+              <strong>Research</strong>
+              <span>Study similar systems and past solutions.</span>
+            </li>
+            <li class="process-stage">
+              <span class="process-stage__number">02</span>
+              <strong>Constraints</strong>
+              <span>Identify the most important mechanical and technical limits.</span>
+            </li>
+            <li class="process-stage">
+              <span class="process-stage__number">03</span>
+              <strong>Design</strong>
+              <span>Sketch mechanisms and create the design in CAD.</span>
+            </li>
+            <li class="process-stage">
+              <span class="process-stage__number">04</span>
+              <strong>Build</strong>
+              <span>Prototype and integrate motors, sensors, electronics, and software.</span>
+            </li>
+            <li class="process-stage">
+              <span class="process-stage__number">05</span>
+              <strong>Test</strong>
+              <span>Use realistic conditions to find the failure points.</span>
+            </li>
+            <li class="process-stage">
+              <span class="process-stage__number">06</span>
+              <strong>Iterate</strong>
+              <span>Modify the design, measure the result, and test again.</span>
+            </li>
+          </ol>
+        </div>
       </div>
     </section>
 

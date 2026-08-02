@@ -874,7 +874,7 @@ button {
   line-height: 1.2;
 }
 
-.process-list,
+.process-cycle__stages,
 .experience-list,
 .plain-list {
   margin: 0;
@@ -882,25 +882,208 @@ button {
   list-style: none;
 }
 
-.process-list {
-  counter-reset: process;
+.process-cycle {
+  position: relative;
+  min-height: 660px;
+  overflow: hidden;
   border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.process-list li {
-  display: grid;
-  grid-template-columns: 54px 1fr;
-  gap: 18px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--faint);
-  counter-increment: process;
-}
-
-.process-list li::before {
+.process-cycle::before,
+.process-cycle::after {
+  position: absolute;
+  z-index: 0;
   color: var(--accent);
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  content: counter(process, decimal-leading-zero);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.process-cycle::before {
+  top: 12px;
+  left: 0;
+  content: "FIG. 02-A / ITERATIVE WORKFLOW";
+}
+
+.process-cycle::after {
+  right: 0;
+  bottom: 12px;
+  content: "REPEAT UNTIL THE SYSTEM WORKS";
+}
+
+.process-cycle__orbit {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 620px;
+  height: 620px;
+  translate: -50% 0;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.process-cycle__orbit path,
+.process-cycle__guide {
+  fill: none;
+  stroke: currentColor;
+}
+
+.process-cycle__orbit path {
+  stroke-width: 1.5;
+}
+
+.process-cycle__guide {
+  opacity: 0.2;
+  stroke-dasharray: 3 7;
+  stroke-width: 1;
+}
+
+.process-cycle__core {
+  position: absolute;
+  top: 330px;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: 164px;
+  aspect-ratio: 1;
+  place-content: center;
+  gap: 7px;
+  text-align: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 0 10px color-mix(in srgb, var(--bg) 82%, transparent);
+  translate: -50% -50%;
+}
+
+.process-cycle__core strong {
+  color: var(--accent);
+  font-size: 1.45rem;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.process-cycle__core span {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.11em;
+}
+
+.process-cycle__stages {
+  position: absolute;
+  inset: 0;
+}
+
+.process-stage {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  width: 204px;
+  min-height: 102px;
+  grid-template-columns: 32px 1fr;
+  gap: 2px 10px;
+  align-content: center;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+}
+
+.process-stage::after {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--accent);
+  background: var(--bg);
+  content: "";
+}
+
+.process-stage__number {
+  grid-row: 1 / span 2;
+  align-self: start;
+  color: var(--bg);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  line-height: 19px;
+  text-align: center;
+  background: var(--accent);
+}
+
+.process-stage strong {
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.process-stage > span:last-child {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.process-stage:nth-child(1) {
+  top: 38px;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.process-stage:nth-child(1)::after {
+  bottom: -31px;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.process-stage:nth-child(2) {
+  top: 172px;
+  right: 0;
+}
+
+.process-stage:nth-child(2)::after {
+  bottom: -5px;
+  left: -31px;
+}
+
+.process-stage:nth-child(3) {
+  right: 0;
+  bottom: 98px;
+}
+
+.process-stage:nth-child(3)::after {
+  top: -5px;
+  left: -31px;
+}
+
+.process-stage:nth-child(4) {
+  bottom: 28px;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.process-stage:nth-child(4)::after {
+  top: -31px;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.process-stage:nth-child(5) {
+  bottom: 98px;
+  left: 0;
+}
+
+.process-stage:nth-child(5)::after {
+  top: -5px;
+  right: -31px;
+}
+
+.process-stage:nth-child(6) {
+  top: 172px;
+  left: 0;
+}
+
+.process-stage:nth-child(6)::after {
+  right: -31px;
+  bottom: -5px;
 }
 
 .experience-list {
@@ -1073,6 +1256,53 @@ button {
   .award-rail {
     padding-right: 24px;
     padding-left: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .process-cycle {
+    min-height: auto;
+    padding: 292px 0 44px;
+    overflow: visible;
+  }
+
+  .process-cycle__orbit {
+    top: 18px;
+    width: 274px;
+    height: 274px;
+  }
+
+  .process-cycle__core {
+    top: 155px;
+    width: 132px;
+  }
+
+  .process-cycle__core strong {
+    font-size: 1.15rem;
+  }
+
+  .process-cycle__stages {
+    position: static;
+    display: grid;
+    gap: 10px;
+  }
+
+  .process-stage,
+  .process-stage:nth-child(n) {
+    position: relative;
+    inset: auto;
+    width: auto;
+    min-height: 0;
+    translate: none;
+  }
+
+  .process-stage::after,
+  .process-stage:nth-child(n)::after {
+    display: none;
+  }
+
+  .process-cycle::after {
+    bottom: 15px;
   }
 }
 
