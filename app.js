@@ -41,10 +41,11 @@
       position: "center"
     },
     evolora: {
-      src: "assets/projects/evolora.webp",
-      alt: "EvoLoRA terminal interface during a representative training run",
-      fit: "cover",
-      position: "center"
+      src: "assets/projects/evolora-team-removedbg.png",
+      alt: "EvoLoRA team at the 2026 AI Engineer World’s Fair Hackathon",
+      fit: "contain",
+      position: "center",
+      transform: "translateX(10%) scale(1.18)"
     },
     blindspot: {
       src: "assets/projects/blindspot.webp",
@@ -131,10 +132,11 @@
       position: "center"
     },
     frc: {
-      src: "assets/projects/frc-2854.webp",
-      alt: "Onshape isometric view of the FRC 2854 competition robot",
-      fit: "cover",
-      position: "center"
+      src: "assets/projects/frc-2854-removedbg.png",
+      alt: "Isolated front view of the FRC 2854 competition robot",
+      fit: "contain",
+      position: "center",
+      transform: "translateX(-7%) scale(1.28)"
     },
     ftc: {
       src: "assets/projects/ftc-dragons.webp",
