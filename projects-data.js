@@ -222,20 +222,6 @@ window.portfolioProjects = [
     github: "https://github.com/CyberBrainiac1/ai-chess-board"
   },
   {
-    slug: "esp32",
-    title: "ESP32 Wi-Fi and Bluetooth Servo Controller",
-    meta: "PERSONAL EMBEDDED-SYSTEMS PROJECT",
-    category: "Connected control",
-    one: "One device, two wireless control paths.",
-    description: [
-      "I built an ESP32 controller that can operate a servo through either Wi-Fi or Bluetooth Low Energy. The board creates its own wireless hotspot, so it does not depend on an existing network, while BLE provides a second connection option.",
-      "A companion web application includes an automatic connection flow and can be installed on an iPhone like an app. Commands can be sent through a REST endpoint or a BLE GATT service, with the ESP32 generating the servo PWM signal on GPIO 18.",
-      "The project brought networking, embedded firmware, browser interfaces, and physical actuation into one small system. It also gave me experience designing around multiple connection methods instead of assuming one network environment."
-    ],
-    tech: "ESP32 · Wi-Fi access point · Bluetooth Low Energy · REST API · BLE GATT · web application · servo PWM",
-    github: "https://github.com/CyberBrainiac1/Esp32control1"
-  },
-  {
     slug: "cyberpad",
     title: "CyberPad and DailyPad",
     meta: "PERSONAL EMBEDDED-HARDWARE PROJECT",

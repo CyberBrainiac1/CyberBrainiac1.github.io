@@ -110,12 +110,6 @@
       fit: "contain",
       position: "center"
     },
-    esp32: {
-      src: "assets/projects/esp32-control.svg",
-      alt: "ESP32 Wi-Fi and Bluetooth servo-control application icon",
-      fit: "contain",
-      position: "center"
-    },
     cyberpad: {
       src: "assets/projects/cyberpad.webp",
       alt: "Completed CyberPad RP2040 macropad hardware",
