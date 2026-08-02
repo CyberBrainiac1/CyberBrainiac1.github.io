@@ -768,6 +768,14 @@ model-viewer:not(:defined) .project-model__fallback {
   scroll-padding-inline: 48px;
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.project-rail.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
 }
 
 .project-rail::-webkit-scrollbar {
@@ -1359,6 +1367,8 @@ model-viewer:not(:defined) .project-model__fallback {
     padding: 28px 24px 54px;
     overflow: visible;
     scroll-snap-type: none;
+    touch-action: auto;
+    cursor: auto;
   }
 
   .project-card {

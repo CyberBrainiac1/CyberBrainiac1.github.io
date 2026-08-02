@@ -227,7 +227,7 @@
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
     if (media.kind === "model") return modelMarkup(project, index, media, context);
-    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" style="object-fit:${media.fit};object-position:${media.position}${media.transform ? `;transform:${media.transform}` : ""}">
+    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${media.fit};object-position:${media.position}${media.transform ? `;transform:${media.transform}` : ""}">
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">${project.category}</span>`;
   }
@@ -237,6 +237,7 @@
   const projects = window.portfolioProjects || [];
 
   if (rail && projects.length) {
+    let ignoreCardClick = false;
     const cards = projects.map((project, index) => {
       const button = document.createElement("button");
       button.className = "project-card";
@@ -253,7 +254,9 @@
           <span role="heading" aria-level="2" style="display:block;font-size:19px;font-weight:600;margin-top:7px;line-height:1.2">${project.title}</span>
           <span style="display:block;color:var(--muted);font-size:13px;line-height:1.55;margin-top:7px">${project.one}</span>
         </span>`;
-      button.addEventListener("click", () => openProject(index));
+      button.addEventListener("click", () => {
+        if (!ignoreCardClick) openProject(index);
+      });
       return button;
     });
     rail.append(...cards);
@@ -263,13 +266,49 @@
     let hovered = false;
     rail.addEventListener("mouseenter", () => { hovered = true; });
     rail.addEventListener("mouseleave", () => { hovered = false; pauseUntil = Date.now() + 1200; });
-    rail.addEventListener("pointerdown", () => { pauseUntil = Date.now() + 3000; });
     rail.addEventListener("wheel", (event) => {
       if (innerWidth <= 820) return;
+      const delta = Math.abs(event.deltaX) >= Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!delta) return;
       event.preventDefault();
-      rail.scrollLeft += event.deltaY + event.deltaX;
+      rail.scrollLeft += delta;
       pauseUntil = Date.now() + 1800;
     }, { passive: false });
+
+    let activePointer = null;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+    let dragged = false;
+
+    rail.addEventListener("pointerdown", (event) => {
+      if (innerWidth <= 820 || event.button !== 0) return;
+      activePointer = event.pointerId;
+      dragStartX = event.clientX;
+      dragStartScroll = rail.scrollLeft;
+      dragged = false;
+      rail.setPointerCapture?.(event.pointerId);
+      rail.classList.add("is-dragging");
+      pauseUntil = Date.now() + 3000;
+    });
+
+    rail.addEventListener("pointermove", (event) => {
+      if (event.pointerId !== activePointer) return;
+      const distance = event.clientX - dragStartX;
+      if (Math.abs(distance) > 5) dragged = true;
+      rail.scrollLeft = dragStartScroll - distance;
+    });
+
+    const finishDrag = (event) => {
+      if (event.pointerId !== activePointer) return;
+      ignoreCardClick = dragged;
+      activePointer = null;
+      rail.classList.remove("is-dragging");
+      pauseUntil = Date.now() + 1800;
+      setTimeout(() => { ignoreCardClick = false; }, 0);
+    };
+
+    rail.addEventListener("pointerup", finishDrag);
+    rail.addEventListener("pointercancel", finishDrag);
 
     function drift() {
       if (!reduceMotion && innerWidth > 820 && !hovered && !dialog?.open && Date.now() > pauseUntil) {
