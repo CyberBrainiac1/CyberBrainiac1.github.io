@@ -872,6 +872,11 @@ model-viewer:not(:defined) .project-model__fallback {
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
+.project-card.project-card--portrait {
+  width: 300px;
+  min-width: 300px;
+}
+
 .project-card:hover,
 .project-card:focus-visible {
   border-color: var(--accent);
@@ -1513,6 +1518,12 @@ model-viewer:not(:defined) .project-model__fallback {
     width: 100%;
     min-width: 0;
     min-height: 0;
+  }
+
+  .project-card.project-card--portrait {
+    width: min(100%, 300px);
+    min-width: 0;
+    justify-self: center;
   }
 
   .project-card .figure-plate {

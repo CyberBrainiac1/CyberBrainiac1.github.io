@@ -285,6 +285,7 @@
       card.type = "button";
       card.setAttribute("aria-label", `Open details for ${project.title}`);
       const media = projectMedia[project.slug];
+      if (media?.cardAspect) card.classList.add("project-card--portrait");
       const hasMedia = Boolean(media);
       const hasModel = media?.kind === "model";
       card.innerHTML = `
@@ -308,25 +309,29 @@
     rail.addEventListener("mouseenter", () => { hovered = true; });
     rail.addEventListener("mouseleave", () => { hovered = false; pauseUntil = Date.now() + 1200; });
 
-    function cardStep() {
-      const firstCard = rail.querySelector(".project-card");
-      if (!firstCard) return Math.max(rail.clientWidth * 0.8, 320);
-      const gap = Number.parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap) || 24;
-      return firstCard.getBoundingClientRect().width + gap;
-    }
-
     function moveProjects(distance, smooth = false) {
       rail.scrollBy({ left: distance, behavior: smooth ? "smooth" : "auto" });
       pauseUntil = Date.now() + 2200;
     }
 
-    previousProjects?.addEventListener("click", () => moveProjects(-cardStep(), true));
-    nextProjects?.addEventListener("click", () => moveProjects(cardStep(), true));
+    function moveToAdjacentCard(direction) {
+      const inset = Number.parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+      const offsets = cards.map((card) => Math.max(0, card.offsetLeft - inset));
+      const current = rail.scrollLeft;
+      const target = direction > 0
+        ? offsets.find((offset) => offset > current + 4) ?? rail.scrollWidth
+        : offsets.slice().reverse().find((offset) => offset < current - 4) ?? 0;
+      rail.scrollTo({ left: target, behavior: "smooth" });
+      pauseUntil = Date.now() + 2200;
+    }
+
+    previousProjects?.addEventListener("click", () => moveToAdjacentCard(-1));
+    nextProjects?.addEventListener("click", () => moveToAdjacentCard(1));
 
     rail.addEventListener("keydown", (event) => {
       if (innerWidth <= 820) return;
-      if (event.key === "ArrowLeft") moveProjects(-cardStep(), true);
-      else if (event.key === "ArrowRight") moveProjects(cardStep(), true);
+      if (event.key === "ArrowLeft") moveToAdjacentCard(-1);
+      else if (event.key === "ArrowRight") moveToAdjacentCard(1);
       else if (event.key === "Home") rail.scrollTo({ left: 0, behavior: "smooth" });
       else if (event.key === "End") rail.scrollTo({ left: rail.scrollWidth, behavior: "smooth" });
       else return;
