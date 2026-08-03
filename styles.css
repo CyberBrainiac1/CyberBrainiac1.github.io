@@ -766,6 +766,10 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .projects-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
   flex: none;
   padding: 16px 48px 0;
 }
@@ -797,6 +801,32 @@ model-viewer:not(:defined) .project-model__fallback {
   display: none;
 }
 
+.project-nav {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 2px;
+}
+
+.project-nav button {
+  display: grid;
+  width: 46px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  color: var(--ink);
+  font: 500 18px/1 "IBM Plex Mono", monospace;
+  background: var(--card);
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.project-nav button:hover,
+.project-nav button:focus-visible {
+  color: var(--card);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
 .project-rail {
   display: flex;
   flex: 1;
@@ -808,9 +838,9 @@ model-viewer:not(:defined) .project-model__fallback {
   overflow-y: hidden;
   scrollbar-width: none;
   scroll-padding-inline: 48px;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: none;
   overscroll-behavior-x: contain;
-  touch-action: pan-y;
+  touch-action: pan-x;
   cursor: grab;
 }
 
@@ -839,7 +869,6 @@ model-viewer:not(:defined) .project-model__fallback {
   border: 1px solid var(--line);
   border-radius: 0;
   cursor: pointer;
-  scroll-snap-align: start;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -851,7 +880,7 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-card .figure-plate {
-  height: clamp(220px, 32vh, 310px);
+  height: clamp(280px, 45vh, 360px);
   border: 0;
   border-bottom: 1px solid var(--line);
 }
@@ -1454,10 +1483,22 @@ model-viewer:not(:defined) .project-model__fallback {
     cursor: auto;
   }
 
+  .project-nav {
+    display: none;
+  }
+
+  .projects-intro {
+    display: block;
+  }
+
   .project-card {
     width: 100%;
     min-width: 0;
     min-height: 420px;
+  }
+
+  .project-card .figure-plate {
+    height: clamp(290px, 46vw, 360px);
   }
 
   .projects-intro,

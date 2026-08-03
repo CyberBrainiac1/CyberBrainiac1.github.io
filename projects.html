@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>document.documentElement.dataset.theme=localStorage.getItem('pe-theme')==='dark'?'dark':'light';</script>
-  <link rel="stylesheet" href="styles.css?v=20260803-2">
+  <link rel="stylesheet" href="styles.css?v=20260803-3">
   <script type="module" src="assets/vendor/model-viewer/model-viewer.min.js"></script>
   <script src="projects-data.js?v=20260803-4" defer></script>
-  <script src="app.js?v=20260803-6" defer></script>
+  <script src="app.js?v=20260803-7" defer></script>
 </head>
 <body class="projects-page">
   <a class="skip-link" href="#main">Skip to projects</a>
@@ -28,10 +28,16 @@
 
   <main id="main" class="projects-layout">
     <div class="projects-intro">
-      <h1>Projects</h1>
-      <p><span class="desktop-instruction">Scroll to browse sideways · click a card for details</span><span class="mobile-instruction">Scroll to browse the index · tap a card for details</span></p>
+      <div>
+        <h1>Projects</h1>
+        <p><span class="desktop-instruction">Wheel, drag, or use arrows to browse · click for details</span><span class="mobile-instruction">Scroll to browse the index · tap a card for details</span></p>
+      </div>
+      <div class="project-nav" aria-label="Project carousel controls">
+        <button type="button" data-project-prev aria-label="Previous projects" aria-controls="project-rail">←</button>
+        <button type="button" data-project-next aria-label="Next projects" aria-controls="project-rail">→</button>
+      </div>
     </div>
-    <section class="project-rail" data-project-rail aria-label="Project index"></section>
+    <section id="project-rail" class="project-rail" data-project-rail aria-label="Project index" tabindex="0"></section>
     <div class="award-rail">
       <span>FTC Control Award ’26 · Winner—Milpitas Hacks 3 · Winner—BISV Hacks ’26 · Top 6/69—AI Engineer World’s Fair</span>
       <span class="project-count">16 projects</span>

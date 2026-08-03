@@ -219,6 +219,8 @@
 
   const rail = document.querySelector("[data-project-rail]");
   const dialog = document.querySelector("[data-project-dialog]");
+  const previousProjects = document.querySelector("[data-project-prev]");
+  const nextProjects = document.querySelector("[data-project-next]");
   const projects = window.portfolioProjects || [];
 
   if (rail && projects.length) {
@@ -260,13 +262,44 @@
     let hovered = false;
     rail.addEventListener("mouseenter", () => { hovered = true; });
     rail.addEventListener("mouseleave", () => { hovered = false; pauseUntil = Date.now() + 1200; });
-    rail.addEventListener("wheel", (event) => {
+
+    function cardStep() {
+      const firstCard = rail.querySelector(".project-card");
+      if (!firstCard) return Math.max(rail.clientWidth * 0.8, 320);
+      const gap = Number.parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap) || 24;
+      return firstCard.getBoundingClientRect().width + gap;
+    }
+
+    function moveProjects(distance, smooth = false) {
+      rail.scrollBy({ left: distance, behavior: smooth ? "smooth" : "auto" });
+      pauseUntil = Date.now() + 2200;
+    }
+
+    previousProjects?.addEventListener("click", () => moveProjects(-cardStep(), true));
+    nextProjects?.addEventListener("click", () => moveProjects(cardStep(), true));
+
+    rail.addEventListener("keydown", (event) => {
       if (innerWidth <= 820) return;
-      const delta = Math.abs(event.deltaX) >= Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-      if (!delta) return;
+      if (event.key === "ArrowLeft") moveProjects(-cardStep(), true);
+      else if (event.key === "ArrowRight") moveProjects(cardStep(), true);
+      else if (event.key === "Home") rail.scrollTo({ left: 0, behavior: "smooth" });
+      else if (event.key === "End") rail.scrollTo({ left: rail.scrollWidth, behavior: "smooth" });
+      else return;
       event.preventDefault();
-      rail.scrollLeft += delta;
-      pauseUntil = Date.now() + 1800;
+      pauseUntil = Date.now() + 2200;
+    });
+
+    window.addEventListener("wheel", (event) => {
+      if (innerWidth <= 820 || dialog?.open || event.ctrlKey) return;
+      const rawDelta = Math.abs(event.deltaX) >= Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!rawDelta) return;
+      const unit = event.deltaMode === 1
+        ? 24
+        : event.deltaMode === 2
+          ? rail.clientWidth
+          : 1;
+      event.preventDefault();
+      moveProjects(rawDelta * unit);
     }, { passive: false });
 
     let activePointer = null;
