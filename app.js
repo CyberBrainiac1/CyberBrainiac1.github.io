@@ -65,12 +65,6 @@
       position: "center",
       transform: "translateX(-7%) scale(1.12)"
     },
-    controlcenter: {
-      src: "assets/projects/wheel-control-center.webp",
-      alt: "BTS7960 force-feedback wheel Control Center dashboard",
-      fit: "cover",
-      position: "left top"
-    },
     ffbtester: {
       src: "assets/projects/ffb-tester.webp",
       alt: "EMC force-feedback tester desktop application",

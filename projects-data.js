@@ -103,21 +103,6 @@ window.portfolioProjects = [
     github: ""
   },
   {
-    slug: "controlcenter",
-    title: "BTS7960 Wheel Control Center",
-    meta: "PERSONAL SOFTWARE PROJECT · C# · WPF · EMBEDDED HARDWARE",
-    category: "Hardware tooling",
-    one: "A setup and repair app for my force-feedback wheel.",
-    description: [
-      "My force-feedback wheel needed more than working firmware. A wiring mistake, bad calibration, or failed update could make the hardware difficult to use or repair.",
-      "I expanded open-source Arduino firmware by Milos Rankovic and built a Windows Control Center for it. The app guides setup, checks wiring, calibrates the wheel, shows live data, runs hardware tests, and manages firmware updates.",
-      "I also added a phone dashboard for the local network and a local Ollama assistant. Reset and rollback tools help recover from a bad firmware update.",
-      "This project showed me that useful hardware also needs clear setup, testing, error messages, and recovery tools."
-    ],
-    tech: "C# · WPF · .NET 8 · Arduino Leonardo · BTS7960 · firmware flashing · telemetry · Ollama",
-    github: "https://github.com/CyberBrainiac1/BTS7960LeonardoFirmware-ControlCenter"
-  },
-  {
     slug: "ffbtester",
     title: "EMC Force-Feedback Tester",
     meta: "PERSONAL TEST-TOOL PROJECT · C# · HID FORCE FEEDBACK",
