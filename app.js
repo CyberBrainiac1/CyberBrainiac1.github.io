@@ -35,11 +35,10 @@
       position: "center"
     },
     evolora: {
-      src: "assets/projects/evolora-team-removedbg.png",
-      alt: "EvoLoRA team at the 2026 AI Engineer World’s Fair Hackathon",
+      src: "assets/projects/evolora.webp",
+      alt: "EvoLoRA terminal interface showing its training agent, LoRA settings, examples, and metrics",
       fit: "contain",
-      position: "center",
-      transform: "translateX(10%) scale(1.18)"
+      position: "center"
     },
     blindspot: {
       src: "assets/projects/blindspot.webp",
