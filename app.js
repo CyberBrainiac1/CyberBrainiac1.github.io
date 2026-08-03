@@ -65,12 +65,6 @@
       position: "center",
       transform: "translateX(-7%) scale(1.12)"
     },
-    ffbtester: {
-      src: "assets/projects/ffb-tester.webp",
-      alt: "EMC force-feedback tester desktop application",
-      fit: "cover",
-      position: "center"
-    },
     arm3dof: {
       kind: "model",
       src: "assets/projects/3dofarm.glb?v=20260802-1",

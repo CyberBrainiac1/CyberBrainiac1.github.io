@@ -103,20 +103,6 @@ window.portfolioProjects = [
     github: ""
   },
   {
-    slug: "ffbtester",
-    title: "EMC Force-Feedback Tester",
-    meta: "PERSONAL TEST-TOOL PROJECT · C# · HID FORCE FEEDBACK",
-    category: "Bench testing",
-    one: "Testing motor forces without entering a race.",
-    description: [
-      "Testing the wheel only inside a racing game made bugs hard to track down. I built this tool so I could send known force effects to the wheel while it sat on my workbench.",
-      "The app can apply steady force, pulses, and back-and-forth motion at different strengths. Keyboard controls let me watch the hardware while starting a test, and an emergency-stop button can quickly turn the effect off.",
-      "If a test failed here, I knew the problem was in the wheel or its firmware instead of the game."
-    ],
-    tech: "C# · .NET · DirectInput · HID force feedback · hardware diagnostics",
-    github: "https://github.com/CyberBrainiac1/FFBWheelCustomFirmware"
-  },
-  {
     slug: "arm3dof",
     title: "3-DOF Desktop Robot Arm",
     meta: "PERSONAL ROBOTICS PROJECT · 2026",
