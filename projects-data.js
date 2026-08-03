@@ -88,20 +88,6 @@ window.portfolioProjects = [
     github: ""
   },
   {
-    slug: "translator",
-    title: "2DOF Motion Rig Translator",
-    meta: "PERSONAL SOFTWARE AND CONTROLS PROJECT · 2026–PRESENT",
-    category: "Telemetry control",
-    one: "The control layer between telemetry and motors.",
-    description: [
-      "The motion rig needed software that could turn racing-game data into safe motor movement. My Python app receives data from FlyPT Mover, works out where the platform should move, and sends commands through a Seeed XIAO to a Sabertooth motor driver.",
-      "The app handles the rig’s geometry, PID control, calibration, movement limits, and safety rules. I also wrote automated tests so I could check the math before putting a person on the platform.",
-      "The current setup uses a 55 mm spool, a 266 mm distance from the center pivot to each cable, and about 30 degrees of movement in each direction. The final control settings will be tuned after the physical rig is complete."
-    ],
-    tech: "Python · PyQt5 · UDP · serial communication · PID control · kinematics · Seeed XIAO · Sabertooth motor driver · automated testing",
-    github: "https://github.com/CyberBrainiac1/poseTranslatorCyberRig"
-  },
-  {
     slug: "ffbwheel",
     title: "DIY Force-Feedback Steering Wheel",
     meta: "PERSONAL MECHATRONICS PROJECT · FEBRUARY 2026–PRESENT",

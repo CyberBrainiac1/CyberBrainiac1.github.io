@@ -58,12 +58,6 @@
       fit: "cover",
       position: "center"
     },
-    translator: {
-      src: "assets/projects/motion-translator.webp",
-      alt: "2DOF motion-rig translator calibration and control interface",
-      fit: "contain",
-      position: "center top"
-    },
     ffbwheel: {
       src: "assets/projects/ffb-wheelbase-removedbg.png",
       alt: "Isolated force-feedback steering wheelbase with motors, drivers, and wiring",
