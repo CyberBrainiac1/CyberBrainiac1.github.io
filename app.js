@@ -67,7 +67,7 @@
     },
     arm3dof: {
       kind: "model",
-      src: "assets/projects/3dofarm.glb?v=20260802-1",
+      src: "assets/projects/3dofarm.glb?v=20260803-1",
       alt: "Interactive 3D model of the 3-DOF desktop robot arm"
     },
     hand: {
@@ -167,23 +167,25 @@
     const interactive = context === "dialog";
     const controls = interactive ? "camera-controls" : "";
     const loading = interactive ? "eager" : "lazy";
-    const cameraOrbit = interactive ? "35deg 68deg 105%" : "35deg 68deg 100%";
+    const cameraOrbit = interactive ? "35deg 68deg 92%" : "35deg 68deg 84%";
 
     return `<model-viewer class="project-model${interactive ? " project-model--interactive" : " project-model--preview"}"
         src="${media.src}"
         alt="${media.alt}"
         ${controls}
-        ${reduceMotion ? "" : "auto-rotate"}
+        ${interactive || reduceMotion ? "" : "auto-rotate"}
         auto-rotate-delay="900"
-        rotation-per-second="12deg"
+        rotation-per-second="7deg"
         camera-orbit="${cameraOrbit}"
-        min-camera-orbit="auto auto 60%"
-        max-camera-orbit="auto auto 240%"
-        field-of-view="32deg"
-        shadow-intensity="0.75"
-        shadow-softness="0.85"
-        exposure="0.95"
-        tone-mapping="neutral"
+        camera-target="0m -0.025m 0m"
+        min-camera-orbit="auto auto 45%"
+        max-camera-orbit="auto auto 220%"
+        field-of-view="28deg"
+        environment-image="neutral"
+        shadow-intensity="1"
+        shadow-softness="0.7"
+        exposure="0.65"
+        tone-mapping="commerce"
         interaction-prompt="none"
         touch-action="pan-y"
         loading="${loading}"
@@ -324,9 +326,9 @@
     const reset = dialogFigure.querySelector("[data-model-reset]");
     if (model && reset) {
       reset.addEventListener("click", () => {
-        model.setAttribute("camera-orbit", "35deg 68deg 105%");
-        model.setAttribute("camera-target", "auto auto auto");
-        model.setAttribute("field-of-view", "32deg");
+        model.setAttribute("camera-orbit", "35deg 68deg 92%");
+        model.setAttribute("camera-target", "0m -0.025m 0m");
+        model.setAttribute("field-of-view", "28deg");
         model.resetTurntableRotation?.(0);
         model.focus();
       });
