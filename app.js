@@ -32,6 +32,8 @@
       src: "assets/projects/solderbuddy.webp",
       alt: "SolderBuddy robot arm beside soldering tools",
       aspect: "3 / 4",
+      cardShape: "portrait",
+      cardMaxHeight: 300,
       fit: "cover",
       position: "center"
     },
