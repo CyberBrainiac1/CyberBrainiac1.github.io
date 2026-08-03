@@ -1380,14 +1380,23 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 18px 0 0;
   padding: 0;
-  color: var(--muted);
   font-size: 10px;
   letter-spacing: 0.04em;
-  line-height: 1.75;
   list-style: none;
   text-transform: uppercase;
+}
+
+.skills-list li {
+  padding: 7px 9px;
+  color: var(--muted);
+  line-height: 1.25;
+  background: color-mix(in srgb, var(--accent) 5%, var(--card));
+  border: 1px solid var(--faint);
 }
 
 .plain-list {
