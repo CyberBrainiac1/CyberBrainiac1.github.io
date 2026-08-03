@@ -39,7 +39,8 @@
       src: "assets/projects/evolora.webp",
       alt: "EvoLoRA terminal interface showing its training agent, LoRA settings, examples, and metrics",
       aspect: "8 / 3",
-      fit: "contain",
+      cardAspect: "946 / 600",
+      fit: "cover",
       position: "center"
     },
     blindspot: {
@@ -47,6 +48,7 @@
       alt: "Blind Spot phone mockup showing the rider hazard map",
       aspect: "4 / 3",
       cardAspect: "9 / 16",
+      cardShape: "portrait",
       fit: "cover",
       position: "center"
     },
@@ -134,6 +136,8 @@
       src: "assets/projects/ftc-dragons.webp",
       alt: "FTC Evergreen Dragons robot with mechanism callouts",
       aspect: "490 / 633",
+      cardShape: "portrait",
+      cardMaxHeight: 300,
       fit: "contain",
       position: "center"
     }
@@ -153,9 +157,13 @@
     const dialogHost = plate.closest(".project-dialog");
     const cardHost = plate.closest(".project-card");
     const hostWidth = Math.max(0, (dialogHost || cardHost)?.clientWidth - 2);
-    const maxHeight = dialogHost
+    const defaultMaxHeight = dialogHost
       ? Math.min(innerHeight * 0.6, innerWidth <= 560 ? 520 : 560)
       : Math.min(innerHeight * 0.52, 360);
+    const cardMaxHeight = Number.parseFloat(plate.dataset.cardMaxHeight);
+    const maxHeight = !dialogHost && Number.isFinite(cardMaxHeight)
+      ? Math.min(defaultMaxHeight, cardMaxHeight)
+      : defaultMaxHeight;
     const width = dialogHost ? hostWidth : Math.min(hostWidth, maxHeight * ratio);
     const height = Math.min(width / ratio, maxHeight);
     plate.style.setProperty("--media-box-width", `${width.toFixed(2)}px`);
@@ -285,11 +293,11 @@
       card.type = "button";
       card.setAttribute("aria-label", `Open details for ${project.title}`);
       const media = projectMedia[project.slug];
-      if (media?.cardAspect) card.classList.add("project-card--portrait");
+      if (media?.cardShape === "portrait") card.classList.add("project-card--portrait");
       const hasMedia = Boolean(media);
       const hasModel = media?.kind === "model";
       card.innerHTML = `
-        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" data-media-ratio="${mediaRatio(media)}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
+        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" data-media-ratio="${mediaRatio(media)}" data-card-max-height="${media?.cardMaxHeight || ""}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
           <span class="meta">${project.meta}</span>
           <span role="heading" aria-level="2" class="project-card__title">${project.title}</span>
