@@ -53,10 +53,17 @@
       position: "center"
     },
     motionrig: {
-      src: "assets/projects/motion-rig.webp",
-      alt: "Wooden dual-motor sim-racing motion rig under construction",
-      fit: "cover",
-      position: "center"
+      kind: "gallery",
+      items: [
+        {
+          src: "assets/projects/motion-rig.webp",
+          alt: "Wooden dual-motor sim-racing motion rig under construction"
+        },
+        {
+          src: "assets/projects/wooden-sim-racing-chassis.webp",
+          alt: "Completed wooden sim-racing chassis with wheel, pedals, and seat"
+        }
+      ]
     },
     ffbwheel: {
       src: "assets/projects/ffb-wheelbase-removedbg.png",
@@ -101,12 +108,6 @@
       fit: "contain",
       position: "center",
       transform: "translate(3%, -2%) scale(1.4)"
-    },
-    chassis: {
-      src: "assets/projects/wooden-sim-racing-chassis.webp",
-      alt: "Completed wooden sim-racing chassis with wheel, pedals, and seat",
-      fit: "cover",
-      position: "center"
     },
     frc: {
       src: "assets/projects/frc-2854-removedbg.png",
@@ -204,6 +205,13 @@
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
     if (media.kind === "model") return modelMarkup(project, index, media, context);
+    if (media.kind === "gallery") {
+      return `<span class="project-image-duo">
+        ${media.items.map((item) => `<img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" draggable="false">`).join("")}
+      </span>
+      <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
+      <span class="blueprint-label project-visual-label">Chassis + motion platform</span>`;
+    }
     return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${media.fit};object-position:${media.position}${media.transform ? `;transform:${media.transform}` : ""}">
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">${project.category}</span>`;

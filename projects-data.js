@@ -75,16 +75,18 @@ window.portfolioProjects = [
   },
   {
     slug: "motionrig",
-    title: "Sim Racing Motion Rig",
-    meta: "PERSONAL MECHATRONICS PROJECT · HARDWARE IN DEVELOPMENT · 2026–PRESENT",
-    category: "Motion platform",
-    one: "Turning game telemetry into physical movement.",
+    title: "Sim Racing Motion Rig & Wooden Chassis",
+    meta: "PERSONAL MECHATRONICS + FABRICATION PROJECT · HARDWARE IN DEVELOPMENT · 2026–PRESENT",
+    category: "Motion rig fabrication",
+    one: "Building the wooden rig and making it move from game telemetry.",
     description: [
-      "I wanted to learn what makes a motion simulator feel believable. That meant building the moving platform and also understanding its geometry, motor control, game data, calibration, and safety limits.",
-      "Two motors pull cables wrapped around spools. Each cable lifts one side of a wooden platform, creating pitch and roll. The motors only pull, while the rider’s weight brings the platform back down.",
+      "My steering wheel and pedals needed a strong frame that would not move under force. I built the chassis from standard 2×4 lumber with basic tools.",
+      "The frame supports the wheel, pedals, seat, electronics, and motion hardware. I kept the mounting areas open so I could change parts as the project grew.",
+      "I then began turning the chassis into a motion simulator. Two motors pull cables wrapped around spools. Each cable lifts one side of a wooden platform to create pitch and roll, while the rider’s weight brings it back down.",
+      "Building the frame and motion system together showed me how much flex affects steering feel, pedal feel, and motion geometry. It also pushed me to think about motor control, game data, calibration, and safety limits as one system.",
       "The rig is still being built. I am now finishing the hardware, adding position sensors, checking the travel limits, and tuning the controller with weight on the platform."
     ],
-    tech: "Woodworking · dual-motor cable actuation · spool design · motor drivers · sensor feedback · mechanical safety · Assetto Corsa and BeamNG telemetry",
+    tech: "Woodworking · 2×4 construction · mechanical mounting · dual-motor cable actuation · spool design · motor drivers · sensor feedback · mechanical safety · Assetto Corsa and BeamNG telemetry",
     github: ""
   },
   {
@@ -187,20 +189,6 @@ window.portfolioProjects = [
       "Keeping the pedals separate gave me fewer things to debug at once and made future sensor upgrades easier."
     ],
     tech: "Arduino input mapping · USB HID · pedal sensing · switch inputs · calibration",
-    github: ""
-  },
-  {
-    slug: "chassis",
-    title: "Wooden Sim Racing Chassis",
-    meta: "PERSONAL FABRICATION PROJECT",
-    category: "Rig fabrication",
-    one: "Building a complete rig with basic tools.",
-    description: [
-      "My steering wheel and pedals needed a strong frame that would not move under force. I built the chassis from standard 2×4 lumber with basic tools.",
-      "The frame supports the wheel, pedals, seat, electronics, and future motion hardware. I kept the mounting areas open so I could change parts as the project grew.",
-      "This build showed me how much the frame affects the hardware. Flex can change the steering feel, pedal feel, and motion geometry."
-    ],
-    tech: "Woodworking · 2×4 construction · drilling · mechanical mounting · iterative fabrication",
     github: ""
   },
   {
