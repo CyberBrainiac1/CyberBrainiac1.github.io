@@ -235,3 +235,26 @@ window.portfolioProjects = [
     github: ""
   }
 ];
+
+{
+  const featuredOrder = [
+    "evolora",
+    "blindspot",
+    "familiarai",
+    "ftc",
+    "solderbuddy",
+    "catch",
+    "frc",
+    "arm3dof",
+    "motionrig",
+    "ffbwheel",
+    "chessboard",
+    "hand",
+    "kineticcam",
+    "cyberpad",
+    "pedal",
+    "fll"
+  ];
+  const rank = new Map(featuredOrder.map((slug, index) => [slug, index]));
+  window.portfolioProjects.sort((a, b) => (rank.get(a.slug) ?? Infinity) - (rank.get(b.slug) ?? Infinity));
+}
