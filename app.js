@@ -110,11 +110,11 @@
       transform: "translate(3%, -2%) scale(1.4)"
     },
     frc: {
-      src: "assets/projects/frc-2854-removedbg.png",
-      alt: "Isolated front view of the FRC 2854 competition robot",
+      src: "assets/projects/frc-2854-cad.webp?v=20260803-1",
+      alt: "CAD render of the FRC 2854 competition robot",
       fit: "contain",
       position: "center",
-      transform: "translateX(-7%) scale(1.28)"
+      transform: "none"
     },
     ftc: {
       src: "assets/projects/ftc-dragons.webp",
