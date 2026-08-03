@@ -31,29 +31,34 @@
     solderbuddy: {
       src: "assets/projects/solderbuddy.webp",
       alt: "SolderBuddy robot arm beside soldering tools",
+      aspect: "3 / 4",
       fit: "cover",
       position: "center"
     },
     evolora: {
       src: "assets/projects/evolora.webp",
       alt: "EvoLoRA terminal interface showing its training agent, LoRA settings, examples, and metrics",
+      aspect: "8 / 3",
       fit: "contain",
       position: "center"
     },
     blindspot: {
       src: "assets/projects/blindspot.webp",
       alt: "Blind Spot phone mockup showing the rider hazard map",
+      aspect: "4 / 3",
       fit: "contain",
       position: "center"
     },
     familiarai: {
       src: "assets/projects/familiarai.webp",
       alt: "FamiliarAI caregiver application landing screen",
+      aspect: "320 / 149",
       fit: "cover",
       position: "center"
     },
     motionrig: {
       kind: "gallery",
+      aspect: "16 / 9",
       items: [
         {
           src: "assets/projects/motion-rig.webp",
@@ -68,24 +73,28 @@
     ffbwheel: {
       src: "assets/projects/ffb-wheelbase-removedbg.png",
       alt: "Isolated force-feedback steering wheelbase with motors, drivers, and wiring",
+      aspect: "4 / 3",
       fit: "contain",
       position: "center",
       transform: "translateX(-7%) scale(1.12)"
     },
     arm3dof: {
       kind: "model",
-      src: "assets/projects/3dofarm.glb?v=20260803-1",
+      src: "assets/projects/3dofarm.glb?v=20260803-2",
+      aspect: "4 / 3",
       alt: "Interactive 3D model of the 3-DOF desktop robot arm"
     },
     hand: {
       src: "assets/projects/robotic-hand.webp",
       alt: "CAD model of the tendon-driven robotic hand",
+      aspect: "849 / 620",
       fit: "cover",
       position: "center"
     },
     kineticcam: {
       src: "assets/projects/kinetic-cam.webp",
       alt: "CAD render of the Kinetic Cam mechanical camera head",
+      aspect: "9 / 7",
       fit: "contain",
       position: "center",
       transform: "translateX(-16.5%)"
@@ -93,18 +102,21 @@
     chessboard: {
       src: "assets/projects/ai-chess-board.webp",
       alt: "CAD render of the automated AI chess board",
+      aspect: "967 / 742",
       fit: "contain",
       position: "center"
     },
     cyberpad: {
       src: "assets/projects/cyberpad.webp",
       alt: "Completed CyberPad RP2040 macropad hardware",
+      aspect: "849 / 620",
       fit: "cover",
       position: "center"
     },
     pedal: {
       src: "assets/projects/sim-pedals-removedbg.png",
       alt: "Isolated DIY sim-racing throttle and brake pedal assembly",
+      aspect: "3 / 4",
       fit: "contain",
       position: "center",
       transform: "translate(3%, -2%) scale(1.4)"
@@ -112,6 +124,7 @@
     frc: {
       src: "assets/projects/frc-2854-cad.webp?v=20260803-1",
       alt: "CAD render of the FRC 2854 competition robot",
+      aspect: "893 / 661",
       fit: "contain",
       position: "center",
       transform: "none"
@@ -119,10 +132,15 @@
     ftc: {
       src: "assets/projects/ftc-dragons.webp",
       alt: "FTC Evergreen Dragons robot with mechanism callouts",
+      aspect: "490 / 633",
       fit: "contain",
       position: "center"
     }
   };
+
+  function mediaAspect(media) {
+    return media?.aspect || "16 / 9";
+  }
 
   function schematicMarkup(index, label) {
     const variant = index % 5;
@@ -168,7 +186,7 @@
     const interactive = context === "dialog";
     const controls = interactive ? "camera-controls" : "";
     const loading = interactive ? "eager" : "lazy";
-    const cameraOrbit = interactive ? "35deg 68deg 92%" : "35deg 68deg 84%";
+    const cameraOrbit = interactive ? "35deg 68deg 108%" : "35deg 68deg 96%";
 
     return `<model-viewer class="project-model${interactive ? " project-model--interactive" : " project-model--preview"}"
         src="${media.src}"
@@ -244,7 +262,7 @@
       const hasMedia = Boolean(media);
       const hasModel = media?.kind === "model";
       card.innerHTML = `
-        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}">${visualMarkup(project, index)}</span>
+        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
           <span class="meta">${project.meta}</span>
           <span role="heading" aria-level="2" class="project-card__title">${project.title}</span>
@@ -362,12 +380,13 @@
     const media = projectMedia[project.slug];
     dialogFigure.classList.toggle("project-image-plate", Boolean(media));
     dialogFigure.classList.toggle("project-model-plate", media?.kind === "model");
+    dialogFigure.style.setProperty("--media-aspect", mediaAspect(media));
     dialogFigure.innerHTML = visualMarkup(project, index, "dialog");
     const model = dialogFigure.querySelector("model-viewer");
     const reset = dialogFigure.querySelector("[data-model-reset]");
     if (model && reset) {
       reset.addEventListener("click", () => {
-        model.setAttribute("camera-orbit", "35deg 68deg 92%");
+        model.setAttribute("camera-orbit", "35deg 68deg 108%");
         model.setAttribute("camera-target", "0m -0.025m 0m");
         model.setAttribute("field-of-view", "28deg");
         model.resetTurntableRotation?.(0);

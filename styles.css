@@ -860,7 +860,7 @@ model-viewer:not(:defined) .project-model__fallback {
   flex-direction: column;
   width: calc((100vw - 120px) / 2);
   min-width: 420px;
-  min-height: min(460px, calc(100vh - 270px));
+  min-height: 0;
   padding: 0;
   overflow: hidden;
   color: inherit;
@@ -880,7 +880,11 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-card .figure-plate {
-  height: clamp(280px, 45vh, 360px);
+  width: 100%;
+  height: auto;
+  max-height: min(52vh, 460px);
+  aspect-ratio: var(--media-aspect, 16 / 9);
+  flex: none;
   border: 0;
   border-bottom: 1px solid var(--line);
 }
@@ -899,6 +903,7 @@ model-viewer:not(:defined) .project-model__fallback {
 
 .project-card--status-only {
   justify-content: center;
+  min-height: min(460px, calc(100vh - 270px));
   cursor: default;
 }
 
@@ -1007,14 +1012,18 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-dialog .figure-plate {
-  height: 260px;
+  width: 100%;
+  height: auto;
+  max-height: min(58vh, 460px);
+  aspect-ratio: var(--media-aspect, 16 / 9);
   border: 0;
   border-bottom: 1px solid var(--faint);
 }
 
 .project-dialog .project-model-plate {
-  height: min(48vh, 390px);
-  min-height: 320px;
+  height: auto;
+  min-height: 0;
+  max-height: min(58vh, 460px);
 }
 
 .project-dialog__body {
@@ -1494,11 +1503,16 @@ model-viewer:not(:defined) .project-model__fallback {
   .project-card {
     width: 100%;
     min-width: 0;
-    min-height: 420px;
+    min-height: 0;
   }
 
   .project-card .figure-plate {
-    height: clamp(290px, 46vw, 360px);
+    height: auto;
+    max-height: 460px;
+  }
+
+  .project-card--status-only {
+    min-height: 420px;
   }
 
   .projects-intro,
@@ -1571,8 +1585,9 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-dialog .project-model-plate {
-    height: 300px;
-    min-height: 300px;
+    height: auto;
+    min-height: 0;
+    max-height: 360px;
   }
 
   .home-main,
@@ -1666,7 +1681,8 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-dialog .figure-plate {
-    height: 190px;
+    height: auto;
+    max-height: 360px;
   }
 }
 
