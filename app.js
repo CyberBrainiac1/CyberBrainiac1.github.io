@@ -153,10 +153,10 @@
     const cardHost = plate.closest(".project-card");
     const hostWidth = Math.max(0, (dialogHost || cardHost)?.clientWidth - 2);
     const maxHeight = dialogHost
-      ? Math.min(innerHeight * 0.58, innerWidth <= 560 ? 360 : 460)
+      ? Math.min(innerHeight * 0.6, innerWidth <= 560 ? 520 : 560)
       : Math.min(innerHeight * 0.52, 360);
-    const width = Math.min(hostWidth, maxHeight * ratio);
-    const height = width / ratio;
+    const width = dialogHost ? hostWidth : Math.min(hostWidth, maxHeight * ratio);
+    const height = Math.min(width / ratio, maxHeight);
     plate.style.setProperty("--media-box-width", `${width.toFixed(2)}px`);
     plate.style.setProperty("--media-box-height", `${height.toFixed(2)}px`);
   }
@@ -253,7 +253,9 @@
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">Chassis + motion platform</span>`;
     }
-    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${media.fit};object-position:${media.position}${media.transform ? `;transform:${media.transform}` : ""}">
+    const fit = context === "dialog" ? "contain" : media.fit;
+    const transform = context === "dialog" ? "" : media.transform;
+    return `<img src="${media.src}" alt="${media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${fit};object-position:${media.position}${transform ? `;transform:${transform}` : ""}">
       <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
       <span class="blueprint-label project-visual-label">${project.category}</span>`;
   }

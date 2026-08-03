@@ -972,8 +972,9 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-dialog {
-  width: min(720px, calc(100% - 40px));
-  max-height: 86vh;
+  width: min(1180px, calc(100% - 32px));
+  height: calc(100vh - 32px);
+  max-height: none;
   padding: 0;
   overflow: auto;
   color: var(--ink);
@@ -1024,6 +1025,8 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-dialog__body {
+  width: min(100%, 920px);
+  margin-inline: auto;
   padding: 26px 28px 30px;
 }
 
@@ -1672,8 +1675,8 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-dialog {
-    width: calc(100% - 20px);
-    max-height: 92vh;
+    width: calc(100% - 12px);
+    height: calc(100vh - 12px);
   }
 
   .project-dialog .figure-plate {
