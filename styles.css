@@ -880,13 +880,12 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-card .figure-plate {
-  width: 100%;
-  height: auto;
-  max-height: min(52vh, 460px);
+  width: var(--media-box-width, 100%);
+  height: var(--media-box-height, auto);
   aspect-ratio: var(--media-aspect, 16 / 9);
   flex: none;
-  border: 0;
-  border-bottom: 1px solid var(--line);
+  align-self: center;
+  border: 1px solid var(--line);
 }
 
 .project-card__copy {
@@ -1012,18 +1011,16 @@ model-viewer:not(:defined) .project-model__fallback {
 }
 
 .project-dialog .figure-plate {
-  width: 100%;
-  height: auto;
-  max-height: min(58vh, 460px);
+  width: var(--media-box-width, 100%);
+  height: var(--media-box-height, auto);
   aspect-ratio: var(--media-aspect, 16 / 9);
-  border: 0;
-  border-bottom: 1px solid var(--faint);
+  margin-inline: auto;
+  border: 1px solid var(--faint);
 }
 
 .project-dialog .project-model-plate {
-  height: auto;
+  height: var(--media-box-height, auto);
   min-height: 0;
-  max-height: min(58vh, 460px);
 }
 
 .project-dialog__body {
@@ -1507,8 +1504,8 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-card .figure-plate {
-    height: auto;
-    max-height: 460px;
+    width: var(--media-box-width, 100%);
+    height: var(--media-box-height, auto);
   }
 
   .project-card--status-only {
@@ -1585,9 +1582,8 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-dialog .project-model-plate {
-    height: auto;
+    height: var(--media-box-height, auto);
     min-height: 0;
-    max-height: 360px;
   }
 
   .home-main,
@@ -1681,8 +1677,8 @@ model-viewer:not(:defined) .project-model__fallback {
   }
 
   .project-dialog .figure-plate {
-    height: auto;
-    max-height: 360px;
+    width: var(--media-box-width, 100%);
+    height: var(--media-box-height, auto);
   }
 }
 

@@ -142,6 +142,29 @@
     return media?.aspect || "16 / 9";
   }
 
+  function mediaRatio(media) {
+    const [width, height] = mediaAspect(media).split("/").map(Number);
+    return width > 0 && height > 0 ? width / height : 16 / 9;
+  }
+
+  function fitVisualPlate(plate) {
+    const ratio = Number.parseFloat(plate.dataset.mediaRatio) || 16 / 9;
+    const dialogHost = plate.closest(".project-dialog");
+    const cardHost = plate.closest(".project-card");
+    const hostWidth = Math.max(0, (dialogHost || cardHost)?.clientWidth - 2);
+    const maxHeight = dialogHost
+      ? Math.min(innerHeight * 0.58, innerWidth <= 560 ? 360 : 460)
+      : Math.min(innerHeight * 0.52, 360);
+    const width = Math.min(hostWidth, maxHeight * ratio);
+    const height = width / ratio;
+    plate.style.setProperty("--media-box-width", `${width.toFixed(2)}px`);
+    plate.style.setProperty("--media-box-height", `${height.toFixed(2)}px`);
+  }
+
+  function syncVisualPlates() {
+    document.querySelectorAll(".figure-plate[data-media-ratio]").forEach(fitVisualPlate);
+  }
+
   function schematicMarkup(index, label) {
     const variant = index % 5;
     const diagrams = [
@@ -262,7 +285,7 @@
       const hasMedia = Boolean(media);
       const hasModel = media?.kind === "model";
       card.innerHTML = `
-        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
+        <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" data-media-ratio="${mediaRatio(media)}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
           <span class="meta">${project.meta}</span>
           <span role="heading" aria-level="2" class="project-card__title">${project.title}</span>
@@ -274,6 +297,7 @@
       return card;
     });
     rail.append(...cards);
+    requestAnimationFrame(syncVisualPlates);
 
     let direction = 1;
     let pauseUntil = Date.now() + 2200;
@@ -381,6 +405,7 @@
     dialogFigure.classList.toggle("project-image-plate", Boolean(media));
     dialogFigure.classList.toggle("project-model-plate", media?.kind === "model");
     dialogFigure.style.setProperty("--media-aspect", mediaAspect(media));
+    dialogFigure.dataset.mediaRatio = String(mediaRatio(media));
     dialogFigure.innerHTML = visualMarkup(project, index, "dialog");
     const model = dialogFigure.querySelector("model-viewer");
     const reset = dialogFigure.querySelector("[data-model-reset]");
@@ -411,7 +436,14 @@
     }
     document.body.classList.add("modal-open");
     dialog.showModal();
+    requestAnimationFrame(syncVisualPlates);
   }
+
+  let resizeFrame = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(syncVisualPlates);
+  });
 
   if (dialog) {
     const closeButton = dialog.querySelector("[data-dialog-close]");
