@@ -46,7 +46,8 @@
       src: "assets/projects/blindspot.webp",
       alt: "Blind Spot phone mockup showing the rider hazard map",
       aspect: "4 / 3",
-      fit: "contain",
+      cardAspect: "9 / 16",
+      fit: "cover",
       position: "center"
     },
     familiarai: {
@@ -138,12 +139,12 @@
     }
   };
 
-  function mediaAspect(media) {
-    return media?.aspect || "16 / 9";
+  function mediaAspect(media, context = "card") {
+    return context === "card" && media?.cardAspect ? media.cardAspect : media?.aspect || "16 / 9";
   }
 
-  function mediaRatio(media) {
-    const [width, height] = mediaAspect(media).split("/").map(Number);
+  function mediaRatio(media, context = "card") {
+    const [width, height] = mediaAspect(media, context).split("/").map(Number);
     return width > 0 && height > 0 ? width / height : 16 / 9;
   }
 
@@ -406,8 +407,8 @@
     const media = projectMedia[project.slug];
     dialogFigure.classList.toggle("project-image-plate", Boolean(media));
     dialogFigure.classList.toggle("project-model-plate", media?.kind === "model");
-    dialogFigure.style.setProperty("--media-aspect", mediaAspect(media));
-    dialogFigure.dataset.mediaRatio = String(mediaRatio(media));
+    dialogFigure.style.setProperty("--media-aspect", mediaAspect(media, "dialog"));
+    dialogFigure.dataset.mediaRatio = String(mediaRatio(media, "dialog"));
     dialogFigure.innerHTML = visualMarkup(project, index, "dialog");
     const model = dialogFigure.querySelector("model-viewer");
     const reset = dialogFigure.querySelector("[data-model-reset]");
