@@ -351,21 +351,21 @@ window.portfolioProjects = [
 
 {
   const featuredOrder = [
-    "evolora",
-    "blindspot",
-    "familiarai",
-    "ftc",
-    "solderbuddy",
     "catch",
-    "frc",
-    "arm3dof",
     "motionrig",
     "ffbwheel",
+    "pedal",
+    "evolora",
+    "ftc",
+    "frc",
+    "arm3dof",
+    "blindspot",
+    "familiarai",
+    "solderbuddy",
     "chessboard",
     "hand",
     "kineticcam",
     "cyberpad",
-    "pedal",
     "fll"
   ];
   const rank = new Map(featuredOrder.map((slug, index) => [slug, index]));
