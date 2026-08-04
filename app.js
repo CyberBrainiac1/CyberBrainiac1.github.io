@@ -437,6 +437,20 @@
     dialog.querySelector("[data-dialog-description]").textContent = Array.isArray(project.description)
       ? project.description.join("\n\n")
       : project.description;
+    const partsSection = dialog.querySelector("[data-dialog-parts]");
+    const partsList = dialog.querySelector("[data-dialog-parts-list]");
+    const parts = Array.isArray(project.parts) ? project.parts : [];
+    partsSection.hidden = parts.length === 0;
+    dialog.querySelector("[data-dialog-parts-title]").textContent = project.partsTitle || "Parts used";
+    partsList.replaceChildren(...parts.map((part) => {
+      const item = document.createElement("li");
+      const name = document.createElement("strong");
+      const explanation = document.createElement("span");
+      name.textContent = part.name;
+      explanation.textContent = part.use;
+      item.append(name, explanation);
+      return item;
+    }));
     dialog.querySelector("[data-dialog-tech]").textContent = project.tech;
     const dialogFigure = dialog.querySelector("[data-dialog-figure]");
     const media = projectMedia[project.slug];
