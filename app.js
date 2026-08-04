@@ -366,6 +366,7 @@
     let dragStartX = 0;
     let dragStartScroll = 0;
     let dragged = false;
+    const dragThreshold = 10;
 
     rail.addEventListener("pointerdown", (event) => {
       if (innerWidth <= 820 || event.button !== 0) return;
@@ -373,29 +374,35 @@
       dragStartX = event.clientX;
       dragStartScroll = rail.scrollLeft;
       dragged = false;
-      rail.setPointerCapture?.(event.pointerId);
-      rail.classList.add("is-dragging");
       pauseUntil = Date.now() + 3000;
     });
 
     rail.addEventListener("pointermove", (event) => {
       if (event.pointerId !== activePointer) return;
       const distance = event.clientX - dragStartX;
-      if (Math.abs(distance) > 5) dragged = true;
+      if (!dragged && Math.abs(distance) <= dragThreshold) return;
+      if (!dragged) {
+        dragged = true;
+        rail.setPointerCapture?.(event.pointerId);
+        rail.classList.add("is-dragging");
+      }
       rail.scrollLeft = dragStartScroll - distance;
     });
 
     const finishDrag = (event) => {
       if (event.pointerId !== activePointer) return;
       ignoreCardClick = dragged;
+      if (dragged && rail.hasPointerCapture?.(event.pointerId)) {
+        rail.releasePointerCapture?.(event.pointerId);
+      }
       activePointer = null;
       rail.classList.remove("is-dragging");
       pauseUntil = Date.now() + 1800;
       setTimeout(() => { ignoreCardClick = false; }, 0);
     };
 
-    rail.addEventListener("pointerup", finishDrag);
-    rail.addEventListener("pointercancel", finishDrag);
+    window.addEventListener("pointerup", finishDrag);
+    window.addEventListener("pointercancel", finishDrag);
 
     function drift() {
       if (!reduceMotion && innerWidth > 820 && !hovered && !dialog?.open && Date.now() > pauseUntil) {
