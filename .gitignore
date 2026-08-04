@@ -1,0 +1,7 @@
+# Local Codex project notes
+codex.md
+
+# Local development artifacts
+*.log
+.DS_Store
+Thumbs.db
