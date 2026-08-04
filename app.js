@@ -87,7 +87,14 @@
       kind: "model",
       src: "assets/projects/3dofarm.glb?v=20260803-2",
       aspect: "4 / 3",
-      alt: "Interactive 3D model of the 3-DOF desktop robot arm"
+      alt: "Interactive 3D model of the 3-DOF desktop robot arm",
+      cardSrc: "assets/projects/3dof-arm-removebg.png?v=20260804-1",
+      cardAlt: "Isolated isometric render of the 3-DOF desktop robot arm",
+      cardAspect: "425 / 587",
+      cardFit: "contain",
+      cardPosition: "center",
+      cardShape: "portrait",
+      cardMaxHeight: 300
     },
     hand: {
       src: "assets/projects/robotic-hand.webp",
@@ -97,12 +104,13 @@
       position: "center"
     },
     kineticcam: {
-      src: "assets/projects/kinetic-cam.webp",
-      alt: "CAD render of the Kinetic Cam mechanical camera head",
-      aspect: "9 / 7",
+      src: "assets/projects/kinetic-cam-removebg.png?v=20260804-1",
+      alt: "Isolated CAD render of the Kinetic Cam mechanical camera head",
+      aspect: "365 / 640",
+      cardShape: "portrait",
+      cardMaxHeight: 300,
       fit: "contain",
-      position: "center",
-      transform: "translateX(-16.5%)"
+      position: "center"
     },
     chessboard: {
       src: "assets/projects/ai-chess-board.webp",
@@ -256,7 +264,12 @@
   function visualMarkup(project, index, context = "card") {
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
-    if (media.kind === "model") return modelMarkup(project, index, media, context);
+    if (media.kind === "model") {
+      if (context !== "card" || !media.cardSrc) return modelMarkup(project, index, media, context);
+      return `<img src="${media.cardSrc}" alt="${media.cardAlt || media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${media.cardFit || "contain"};object-position:${media.cardPosition || "center"}">
+        <span class="project-card__index">FIG. ${String(index + 1).padStart(2, "0")}</span>
+        <span class="blueprint-label project-visual-label">3D arm render</span>`;
+    }
     if (media.kind === "gallery") {
       return `<span class="project-image-duo">
         ${media.items.map((item) => `<img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" draggable="false">`).join("")}
@@ -297,7 +310,7 @@
       const media = projectMedia[project.slug];
       if (media?.cardShape === "portrait") card.classList.add("project-card--portrait");
       const hasMedia = Boolean(media);
-      const hasModel = media?.kind === "model";
+      const hasModel = media?.kind === "model" && !media?.cardSrc;
       card.innerHTML = `
         <span class="figure-plate${hasMedia ? " project-image-plate" : ""}${hasModel ? " project-model-plate" : ""}" data-media-ratio="${mediaRatio(media)}" data-card-max-height="${media?.cardMaxHeight || ""}" style="--media-aspect:${mediaAspect(media)}">${visualMarkup(project, index)}</span>
         <span class="project-card__copy">
