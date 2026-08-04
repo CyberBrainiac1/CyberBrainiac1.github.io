@@ -85,7 +85,7 @@
     },
     arm3dof: {
       kind: "model",
-      src: "assets/projects/3dofarm.glb?v=20260803-2",
+      src: "assets/projects/3dofarm.glb?v=20260804-2",
       aspect: "4 / 3",
       alt: "Interactive 3D model of the 3-DOF desktop robot arm",
       cardSrc: "assets/projects/3dof-arm-removebg.png?v=20260804-1",
