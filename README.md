@@ -9,7 +9,7 @@ A responsive personal portfolio for Pranav Emmadi, a high-school robotics builde
 
 ## Design
 
-The interface uses a minimalist blueprint direction with a 28 px drafting grid, technical figure labels, IBM Plex Mono, Space Grotesk, schematic project plates, responsive layouts, and persistent light/dark themes.
+The interface uses a minimalist blueprint direction with a 28 px drafting grid, technical figure labels, IBM Plex Mono, Space Grotesk, responsive project galleries, and persistent light/dark themes.
 
 ## Run locally
 

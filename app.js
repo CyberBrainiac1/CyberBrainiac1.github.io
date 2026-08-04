@@ -43,7 +43,20 @@
       aspect: "8 / 3",
       cardAspect: "946 / 600",
       fit: "cover",
-      position: "center"
+      position: "center",
+      detailAspect: "16 / 9",
+      detailItems: [
+        {
+          src: "assets/projects/evolora.webp",
+          alt: "EvoLoRA terminal interface showing its training agent, LoRA settings, examples, and metrics",
+          caption: "EvoLoRA training interface"
+        },
+        {
+          src: "assets/projects/evolora-team-removedbg.png",
+          alt: "Three members of the EvoLoRA hackathon team",
+          caption: "EvoLoRA team at the AI Engineer World’s Fair Hackathon"
+        }
+      ]
     },
     blindspot: {
       src: "assets/projects/blindspot.webp",
@@ -73,6 +86,23 @@
           src: "assets/projects/wooden-sim-racing-chassis.webp",
           alt: "Completed wooden sim-racing chassis with wheel, pedals, and seat"
         }
+      ],
+      detailItems: [
+        {
+          src: "assets/projects/motion-rig.webp",
+          alt: "Wooden dual-motor sim-racing motion rig under construction",
+          caption: "Dual-motor cable-driven motion platform"
+        },
+        {
+          src: "assets/projects/wooden-sim-racing-chassis.webp",
+          alt: "Completed wooden sim-racing chassis with wheel, pedals, and seat",
+          caption: "Wooden chassis with the wheel, pedals, and seat installed"
+        },
+        {
+          src: "assets/projects/motion-translator.webp",
+          alt: "2DOF motion-control interface showing pitch, roll, calibration, and PID values",
+          caption: "Motion translator used to tune pitch, roll, and motor response"
+        }
       ]
     },
     ffbwheel: {
@@ -81,7 +111,44 @@
       aspect: "4 / 3",
       fit: "contain",
       position: "center",
-      transform: "translateX(-7%) scale(1.12)"
+      transform: "translateX(-7%) scale(1.12)",
+      detailItems: [
+        {
+          src: "assets/projects/ffb-wheelbase-removedbg.png",
+          alt: "Isolated force-feedback steering wheelbase with motors, drivers, and wiring",
+          caption: "Assembled force-feedback wheelbase"
+        },
+        {
+          src: "wheelbase3.jpg",
+          alt: "Close front view of the DIY wheelbase electronics and motor drivers",
+          caption: "Wheelbase electronics and motor drivers"
+        },
+        {
+          src: "wheelbase1.jpg",
+          alt: "Top view inside the DIY force-feedback wheelbase",
+          caption: "Internal wiring and controller layout"
+        },
+        {
+          src: "wheelbase2.jpg",
+          alt: "Side view inside the DIY force-feedback wheelbase",
+          caption: "Wheelbase frame and internal assembly"
+        },
+        {
+          src: "assets/projects/ffb-wheel.webp",
+          alt: "Early DIY force-feedback steering wheel prototype",
+          caption: "Early steering-wheel prototype"
+        },
+        {
+          src: "assets/projects/ffb-tester.webp",
+          alt: "Force-feedback tester interface with manual controls and safety stop",
+          caption: "Force-feedback testing interface"
+        },
+        {
+          src: "assets/projects/wheel-control-center.webp",
+          alt: "Wheel Control Center dashboard for calibration, firmware, and telemetry",
+          caption: "Wheel calibration and control dashboard"
+        }
+      ]
     },
     arm3dof: {
       kind: "model",
@@ -110,7 +177,20 @@
       cardShape: "portrait",
       cardMaxHeight: 300,
       fit: "contain",
-      position: "center"
+      position: "center",
+      detailAspect: "4 / 3",
+      detailItems: [
+        {
+          src: "assets/projects/kinetic-cam-removebg.png?v=20260804-1",
+          alt: "Isolated CAD render of the Kinetic Cam mechanical camera head",
+          caption: "Isolated full Kinetic Cam assembly"
+        },
+        {
+          src: "assets/projects/kinetic-cam.webp",
+          alt: "Original CAD render of the Kinetic Cam body and moving camera head",
+          caption: "Original CAD assembly view"
+        }
+      ]
     },
     chessboard: {
       src: "assets/projects/ai-chess-board.webp",
@@ -132,7 +212,25 @@
       aspect: "3 / 4",
       fit: "contain",
       position: "center",
-      transform: "translate(3%, -2%) scale(1.4)"
+      transform: "translate(3%, -2%) scale(1.4)",
+      detailAspect: "4 / 3",
+      detailItems: [
+        {
+          src: "assets/projects/sim-pedals-removedbg.png",
+          alt: "Isolated DIY sim-racing throttle and brake pedal assembly",
+          caption: "Complete throttle and brake assembly"
+        },
+        {
+          src: "pedals.jpg",
+          alt: "Full-resolution photo of the DIY sim-racing pedals",
+          caption: "Pedal mechanisms, sensors, and wooden base"
+        },
+        {
+          src: "assets/projects/sim-pedal.webp",
+          alt: "Early spring-loaded sim-racing pedal prototype",
+          caption: "Early spring-loaded pedal prototype"
+        }
+      ]
     },
     frc: {
       src: "assets/projects/frc-2854-cad.webp?v=20260803-1",
@@ -140,7 +238,29 @@
       aspect: "893 / 661",
       fit: "contain",
       position: "center",
-      transform: "none"
+      transform: "none",
+      detailItems: [
+        {
+          src: "assets/projects/frc-2854-cad.webp?v=20260803-1",
+          alt: "CAD render of the complete FRC 2854 competition robot",
+          caption: "Full competition-robot CAD render"
+        },
+        {
+          src: "assets/projects/frc-2854-cad-source.png",
+          alt: "Original full-resolution CAD render of the complete FRC 2854 robot",
+          caption: "Original full-resolution CAD export"
+        },
+        {
+          src: "assets/projects/frc-2854.webp",
+          alt: "Onshape view of an earlier FRC 2854 robot configuration",
+          caption: "Earlier robot configuration in Onshape"
+        },
+        {
+          src: "assets/projects/frc-2854-removedbg.png",
+          alt: "Onshape view of another FRC 2854 robot design angle",
+          caption: "Additional robot design view"
+        }
+      ]
     },
     ftc: {
       src: "assets/projects/ftc-dragons.webp",
@@ -154,7 +274,9 @@
   };
 
   function mediaAspect(media, context = "card") {
-    return context === "card" && media?.cardAspect ? media.cardAspect : media?.aspect || "16 / 9";
+    if (context === "card" && media?.cardAspect) return media.cardAspect;
+    if (context === "dialog" && media?.detailAspect) return media.detailAspect;
+    return media?.aspect || "16 / 9";
   }
 
   function mediaRatio(media, context = "card") {
@@ -261,9 +383,74 @@
       </button>` : ""}`;
   }
 
+  function escapeMarkup(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+
+  function detailGalleryMarkup(project, items) {
+    const slides = items.map((item, itemIndex) => `<figure class="project-gallery__slide" data-gallery-slide aria-hidden="${itemIndex === 0 ? "false" : "true"}">
+      <img src="${escapeMarkup(item.src)}" alt="${escapeMarkup(item.alt)}" loading="${itemIndex === 0 ? "eager" : "lazy"}" decoding="async" draggable="false" style="object-fit:${escapeMarkup(item.fit || "contain")}">
+      <figcaption>${escapeMarkup(item.caption || item.alt)}</figcaption>
+    </figure>`).join("");
+    const dots = items.map((item, itemIndex) => `<button type="button" data-gallery-dot="${itemIndex}" aria-label="Show image ${itemIndex + 1}: ${escapeMarkup(item.caption || item.alt)}" aria-current="${itemIndex === 0 ? "true" : "false"}"></button>`).join("");
+
+    return `<div class="project-gallery" data-project-gallery tabindex="0" aria-label="${escapeMarkup(project.title)} image gallery">
+      <div class="project-gallery__track" data-gallery-track>${slides}</div>
+      <div class="project-gallery__controls">
+        <button type="button" data-gallery-prev aria-label="Previous project image">←</button>
+        <span data-gallery-count>01 / ${String(items.length).padStart(2, "0")}</span>
+        <button type="button" data-gallery-next aria-label="Next project image">→</button>
+      </div>
+      <div class="project-gallery__dots" aria-label="Choose a project image">${dots}</div>
+    </div>`;
+  }
+
+  function setupProjectGallery(container) {
+    const gallery = container.querySelector("[data-project-gallery]");
+    if (!gallery) return;
+    const track = gallery.querySelector("[data-gallery-track]");
+    const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
+    const dots = [...gallery.querySelectorAll("[data-gallery-dot]")];
+    const counter = gallery.querySelector("[data-gallery-count]");
+    let current = 0;
+    let pointerStart = null;
+
+    const show = (nextIndex) => {
+      current = (nextIndex + slides.length) % slides.length;
+      track.style.transform = `translateX(${-100 * current}%)`;
+      slides.forEach((slide, slideIndex) => slide.setAttribute("aria-hidden", slideIndex === current ? "false" : "true"));
+      dots.forEach((dot, dotIndex) => dot.setAttribute("aria-current", dotIndex === current ? "true" : "false"));
+      counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+    };
+
+    gallery.querySelector("[data-gallery-prev]").addEventListener("click", () => show(current - 1));
+    gallery.querySelector("[data-gallery-next]").addEventListener("click", () => show(current + 1));
+    dots.forEach((dot, dotIndex) => dot.addEventListener("click", () => show(dotIndex)));
+    gallery.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      show(current + (event.key === "ArrowRight" ? 1 : -1));
+    });
+    gallery.addEventListener("pointerdown", (event) => { pointerStart = event.clientX; });
+    gallery.addEventListener("pointerup", (event) => {
+      if (pointerStart === null) return;
+      const distance = event.clientX - pointerStart;
+      pointerStart = null;
+      if (Math.abs(distance) > 42) show(current + (distance < 0 ? 1 : -1));
+    });
+    gallery.addEventListener("pointercancel", () => { pointerStart = null; });
+  }
+
   function visualMarkup(project, index, context = "card") {
     const media = projectMedia[project.slug];
     if (!media) return schematicMarkup(index, project.category);
+    if (context === "dialog" && media.detailItems?.length > 1) {
+      return detailGalleryMarkup(project, media.detailItems);
+    }
     if (media.kind === "model") {
       if (context !== "card" || !media.cardSrc) return modelMarkup(project, index, media, context);
       return `<img src="${media.cardSrc}" alt="${media.cardAlt || media.alt}" loading="lazy" decoding="async" draggable="false" style="object-fit:${media.cardFit || "contain"};object-position:${media.cardPosition || "center"}">
@@ -459,6 +646,7 @@
     dialogFigure.style.setProperty("--media-aspect", mediaAspect(media, "dialog"));
     dialogFigure.dataset.mediaRatio = String(mediaRatio(media, "dialog"));
     dialogFigure.innerHTML = visualMarkup(project, index, "dialog");
+    setupProjectGallery(dialogFigure);
     const model = dialogFigure.querySelector("model-viewer");
     const reset = dialogFigure.querySelector("[data-model-reset]");
     if (model && reset) {
