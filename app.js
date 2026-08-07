@@ -137,16 +137,6 @@
           src: "assets/projects/ffb-wheel.webp",
           alt: "Early DIY force-feedback steering wheel prototype",
           caption: "Early steering-wheel prototype"
-        },
-        {
-          src: "assets/projects/ffb-tester.webp",
-          alt: "Force-feedback tester interface with manual controls and safety stop",
-          caption: "Force-feedback testing interface"
-        },
-        {
-          src: "assets/projects/wheel-control-center.webp",
-          alt: "Wheel Control Center dashboard for calibration, firmware, and telemetry",
-          caption: "Wheel calibration and control dashboard"
         }
       ]
     },
