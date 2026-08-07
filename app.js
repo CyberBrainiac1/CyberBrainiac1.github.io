@@ -44,19 +44,7 @@
       cardAspect: "946 / 600",
       fit: "cover",
       position: "center",
-      detailAspect: "16 / 9",
-      detailItems: [
-        {
-          src: "assets/projects/evolora.webp",
-          alt: "EvoLoRA terminal interface showing its training agent, LoRA settings, examples, and metrics",
-          caption: "EvoLoRA training interface"
-        },
-        {
-          src: "assets/projects/evolora-team-removedbg.png",
-          alt: "Three members of the EvoLoRA hackathon team",
-          caption: "EvoLoRA team at the AI Engineer World’s Fair Hackathon"
-        }
-      ]
+      detailAspect: "16 / 9"
     },
     blindspot: {
       src: "assets/projects/blindspot.webp",
