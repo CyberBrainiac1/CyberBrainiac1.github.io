@@ -4,7 +4,7 @@ A responsive personal portfolio for Pranav Emmadi, a high-school robotics builde
 
 ## Pages
 
-- **Home** — introduction, current CATCH work, selected builds, education, FIRST experience, engineering process, skills, results, and interests
+- **Home** — introduction, current CATCH work, education, FIRST experience, engineering process, skills, results, and interests
 - **Projects** — interactive index of 16 robotics, software, and hardware projects
 
 ## Design
